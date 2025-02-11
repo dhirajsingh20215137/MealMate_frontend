@@ -2,15 +2,15 @@ import { useState, useEffect, useContext } from "react";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
- // Import AuthContext
  import { useAuth } from "../../auth/authContext";
 import "../../index.css";
+
 
 const HOST = "http://localhost:8081/";
 
 export default function MealLibrary() {
   const navigate = useNavigate();
-  const { user, token } = useAuth(); // Access user and token from context
+  const { user, token } = useAuth(); 
 
   const [meals, setMeals] = useState([]);
   const [meal, setMeal] = useState({

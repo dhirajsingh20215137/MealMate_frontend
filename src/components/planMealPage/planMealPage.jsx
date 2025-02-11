@@ -25,7 +25,7 @@ const PlanMealPage = () => {
   const [quantity, setQuantity] = useState('');
   const [userFoods, setUserFoods] = useState([]);
 
-  // Fetch user's foods
+ 
   useEffect(() => {
     const fetchUserFoods = async () => {
       try {
@@ -63,7 +63,7 @@ const PlanMealPage = () => {
     }
   }, [user, token]);
 
-  // Add food to meal plan
+  
   const addMeal = async () => {
     if (!selectedFoodId || !quantity) {
       alert('Please select a food and enter a quantity.');
@@ -76,7 +76,7 @@ const PlanMealPage = () => {
         {
           foodId: selectedFoodId,
           quantityValue: quantity,
-          mealType: mealType.toUpperCase(),  // Ensure consistency with backend
+          mealType: mealType.toUpperCase(),  
         },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -91,7 +91,7 @@ const PlanMealPage = () => {
         calories: foodDetails?.calories || 0,
         proteins: foodDetails?.proteins || 0,
         carbs: foodDetails?.carbs || 0,
-        mealType: response.data.mealType.toLowerCase(),  // Normalize to lowercase
+        mealType: response.data.mealType.toLowerCase(),  
       };
   
       setMealPlans((prevPlans) => [...prevPlans, newMeal]);
@@ -106,7 +106,7 @@ const PlanMealPage = () => {
   };
   
 
-  // Remove food from meal plan
+ 
   const removeMeal = async (mealPlannerId) => {
     try {
       await axios.delete(`${HOST}user/${userId}/meal-planner/food/${mealPlannerId}`, {

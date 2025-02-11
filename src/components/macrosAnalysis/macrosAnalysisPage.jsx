@@ -8,16 +8,16 @@ import "../../index.css";
 
 const HOST = "http://localhost:8081/";
 
-// ✅ Register Chart.js components
 ChartJS.register(BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
 
 const NutritionStats = () => {
   const { user, token } = useAuth();
-  const [selectedType, setSelectedType] = useState('');
+  const [selectedType, setSelectedType] = useState('carbs');
   const [stats, setStats] = useState(null);
-  const chartRef = useRef(null); // ✅ Reference for cleanup
+  const chartRef = useRef(null);
 
   const fetchStats = async (type) => {
+    console.log('Fetching stats for:', type);
     try {
       const response = await axios.get(`${HOST}user/${user.userId}/stats/${type}`, {
         headers: {
@@ -25,17 +25,20 @@ const NutritionStats = () => {
         },
       });
       setStats(response.data);
-    } catch (error) {
+      console.log('Stats1:', response.data);
+      console.log('Stats2:', stats);
+    } 
+    catch (error) {
       console.error('Error fetching stats:', error);
     }
+
+    console.log('Stats3:', stats);
   };
 
-  // ✅ Fetch stats when selectedType or user changes
   useEffect(() => {
     if (user) fetchStats(selectedType);
   }, [selectedType, user]);
 
-  // ✅ Cleanup previous chart instances
   useEffect(() => {
     return () => {
       if (chartRef.current && chartRef.current.destroy) {
@@ -52,22 +55,22 @@ const NutritionStats = () => {
             label: 'Target',
             data: [stats.dailyTarget, stats.weeklyTarget, stats.monthlyTarget],
             backgroundColor: '#1F5756',
-            barThickness: 50,
+            barThickness: 30, 
           },
           {
             label: 'Achieved',
             data: [stats.dailyAchieved, stats.weeklyAchieved, stats.monthlyAchieved],
             backgroundColor: '#FF6B6B',
-            barThickness: 50,
+            barThickness: 30, 
           },
         ],
       }
     : { labels: [], datasets: [] };
 
   return (
-    <div className="p-6 w-11/12 mx-auto"> {/* ✅ Increased Width */}
-      <div className="bg-white p-8 rounded-2xl shadow-2xl w-full"> {/* ✅ Full-width card */}
-        <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Nutrition Analysis</h1>
+    <div className="p-6 w-full mx-auto">
+      <div className="bg-white p-8 rounded-xl shadow-2xl w-full max-w-screen-2xl mx-auto"> {/* Increased width */}
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Nutrition Analysis</h1>
 
         <ButtonGroup variant="outlined" fullWidth sx={{ marginBottom: '20px' }}>
           {['carbs', 'calories', 'proteins'].map((type) => (
@@ -90,7 +93,7 @@ const NutritionStats = () => {
           ))}
         </ButtonGroup>
 
-        <div className="mt-6" style={{ width: '100%', height: '400px' }}> {/* ✅ Full-width Chart */}
+        <div className="mt-6 h-[500px] w-full">
           {stats ? (
             <Bar
               ref={chartRef}
@@ -113,30 +116,27 @@ const NutritionStats = () => {
                   y: {
                     beginAtZero: true,
                     ticks: {
-                      stepSize: 100,
+                      stepSize: 10000,
                       maxTicksLimit: 6,
                       color: '#555',
-                      font: {
-                        size: 14,
-                        weight: 'bold',
-                      },
+                      font: { size: 12, weight: 'bold' },
+                      callback: (value) => value / 1000 + 'k',
                     },
-                    grid: {
-                      color: '#E0E0E0',
-                      borderDash: [4, 4],
-                    },
+                    grid: { color: '#E0E0E0', borderDash: [4, 4] },
                   },
                   x: {
-                    ticks: {
-                      color: '#555',
-                      font: {
-                        size: 14,
-                        weight: 'bold',
-                      },
-                    },
-                    grid: {
-                      display: false,
-                    },
+                    ticks: { color: '#555', font: { size: 12, weight: 'bold' } },
+                    grid: { display: false },
+                    categoryPercentage: 0.5,
+                    barPercentage: 0.8,
+                  },
+                },
+                layout: {
+                  padding: {
+                    left: 20,
+                    right: 20,
+                    top: 20,
+                    bottom: 20,
                   },
                 },
               }}
@@ -149,3 +149,5 @@ const NutritionStats = () => {
     </div>
   );
 };
+
+export default NutritionStats;

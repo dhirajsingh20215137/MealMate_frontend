@@ -1,13 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
 import Cookies from "js-cookie";
-import { useAuth } from "../../auth/authContext"; // Import useAuth
+import { useAuth } from "../../auth/authContext"; 
 import "./ProfilePage.css";
 
 const HOST = "http://localhost:8081/";
 
 export const ProfilePage = () => {
-    const { user ,token} = useAuth(); // Get user from useAuth
-    const userId = user?.userId; // Extract userId
+    const { user ,token} = useAuth(); 
+    const userId = user?.userId; 
     const [profile, setProfile] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
     const [fileErrorMessage, setFileErrorMessage] = useState("");

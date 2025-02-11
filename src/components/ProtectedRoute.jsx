@@ -14,7 +14,6 @@ const ProtectedRoute = () => {
         );
     }
 
-    // If the user is not logged in, redirect to sign-in, preserving the current location
     if (!user) {
         return <Navigate to="/signin" state={{ from: location }} replace />;
     }

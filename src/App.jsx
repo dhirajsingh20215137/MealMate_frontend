@@ -4,7 +4,7 @@ import { Login } from "./components/login/login.jsx";
 import { ProfilePage } from "./components/profilePage/profilePage.jsx";
 import MealLibrary from "./components/mealPlannerPage/mealPlannerPage.jsx";
 import PlanMealPage from './components/planMealPage/planMealPage.jsx';
-import NutritionStats from './components/macrosAnalysis/macrosAnalysisPage.jsx';  // ✅ Import the NutritionStats
+import NutritionStats from './components/macrosAnalysis/macrosAnalysisPage.jsx';  
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import { useAuth } from './auth/authContext';
 
@@ -77,7 +77,7 @@ function App() {
     return (
         <Router>
             <Navbar />
-            <div className="pt-16"> {/* Add padding to prevent content hiding behind the fixed navbar */}
+            <div className="pt-16"> {/*  */}
                 <Routes>
                     {/* Public Routes */}
                     <Route path="/signup" element={<Signup />} />
@@ -88,7 +88,7 @@ function App() {
                         <Route path="/profilePage" element={<ProfilePage />} />
                         <Route path="/meal-library" element={<MealLibrary />} />
                         <Route path="/plan-meal" element={<PlanMealPage />} />
-                        <Route path="/nutrition-stats" element={<NutritionStats />} /> {/* ✅ Added the Nutrition Analysis route */}
+                        <Route path="/nutrition-stats" element={<NutritionStats />} /> {/*  */}
                     </Route>
                 </Routes>
             </div>

@@ -15,7 +15,7 @@ export const Signup = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const { signup, loading, error } = UseSignup(); // Destructure loading and error
+    const { signup, loading, error } = UseSignup(); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -31,7 +31,6 @@ export const Signup = () => {
 
 
             if (data && data.token) {
-                // Store the token in a cookie with an expiration time (e.g., 30 days)
                 Cookies.set('token', data.token, { expires: 30 });
                 sessionStorage.setItem('email', email);
 

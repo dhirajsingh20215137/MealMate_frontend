@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UseLogin } from "../../logics/useLogin.js";
-import { useAuth } from "../../auth/authContext.jsx";  // ✅ Import useAuth
+import { useAuth } from "../../auth/authContext.jsx"; 
 
 import "./login.css";
 
@@ -10,20 +10,19 @@ export const Login = () => {
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
-    const { login } = useAuth();  // ✅ Use login from AuthContext
+    const { login } = useAuth();  
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const credentials = { email, password };
 
         try {
-            const data = await UseLogin(credentials); // ✅ API response should contain token & user
+            const data = await UseLogin(credentials); 
 
-            // ✅ Store token and user in AuthContext
             login(data.token, data.user);  
 
             alert("Login Successful!");
-            navigate("/");  // Redirect to homepage
+            navigate("/"); 
         } catch (error) {
             setErrorMessage(error.message);
         }
