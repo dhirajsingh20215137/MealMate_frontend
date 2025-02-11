@@ -1,23 +1,25 @@
 import { useState, useEffect, useCallback } from "react";
-import PropTypes from "prop-types";
 import Cookies from "js-cookie";
+import { useAuth } from "../../auth/authContext"; // Import useAuth
 import "./ProfilePage.css";
 
 const HOST = "http://localhost:8081/";
 
-export const ProfilePage = ({ userId }) => {
+export const ProfilePage = () => {
+    const { user ,token} = useAuth(); // Get user from useAuth
+    const userId = user?.userId; // Extract userId
     const [profile, setProfile] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
     const [fileErrorMessage, setFileErrorMessage] = useState("");
     const [loading, setLoading] = useState(true);
     const [refreshProfile, setRefreshProfile] = useState(false);
     const [notification, setNotification] = useState({ message: "", type: "" });
+ 
 
-    // ✅ Fetch User Profile
     const fetchProfile = useCallback(async () => {
-        const token = Cookies.get("token");
-        if (!token) {
-            setErrorMessage("Authorization token is missing.");
+      
+        if (!token || !userId) {
+            setErrorMessage("Authorization token or user ID is missing.");
             return;
         }
 
@@ -42,6 +44,7 @@ export const ProfilePage = ({ userId }) => {
                     : "/MealMate.png",
             });
 
+            console.log("Profile data:", data);
             setLoading(false);
         } catch (error) {
             console.error("Error fetching profile:", error);
@@ -50,19 +53,18 @@ export const ProfilePage = ({ userId }) => {
         }
     }, [userId]);
 
-    // ✅ Fetch Profile on Mount & Updates
     useEffect(() => {
-        fetchProfile();
-    }, [fetchProfile, refreshProfile]);
+        if (userId) {
+            fetchProfile();
+        }
+    }, [fetchProfile, refreshProfile, userId]);
 
-    // ✅ Handle Input Changes
     const handleChange = (e) => {
         const { name, value } = e.target;
         const updatedValue = name === "gender" ? value.toUpperCase() : value;
         setProfile((prev) => ({ ...prev, [name]: updatedValue }));
     };
 
-    // ✅ Upload Profile Photo
     const handlePhotoChange = async (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -74,7 +76,6 @@ export const ProfilePage = ({ userId }) => {
 
             const formData = new FormData();
             formData.append("profilePhoto", file);
-            const token = Cookies.get("token");
 
             try {
                 const response = await fetch(`${HOST}user/${userId}/photo/upload-photo`, {
@@ -92,6 +93,7 @@ export const ProfilePage = ({ userId }) => {
                         ? `${HOST}uploads/${data.userUrl.replace(/^\/+/, "")}`
                         : "/MealMate.png",
                 }));
+                console.log("Profile photo uploaded:", data);
 
                 setNotification({ message: "🎉 Profile photo uploaded successfully!", type: "success" });
                 setRefreshProfile((prev) => !prev);
@@ -102,10 +104,8 @@ export const ProfilePage = ({ userId }) => {
         }
     };
 
-    // ✅ Update Profile
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const token = Cookies.get("token");
 
         if (!token) {
             setNotification({ message: "❌ Authorization token is missing.", type: "error" });
@@ -137,7 +137,6 @@ export const ProfilePage = ({ userId }) => {
         }
     };
 
-    // ✅ Auto Dismiss Notifications
     useEffect(() => {
         if (notification.message) {
             const timer = setTimeout(() => {
@@ -225,10 +224,6 @@ export const ProfilePage = ({ userId }) => {
             </div>
         </div>
     );
-};
-
-ProfilePage.propTypes = {
-    userId: PropTypes.number.isRequired,
 };
 
 export default ProfilePage;

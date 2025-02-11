@@ -7,14 +7,17 @@
 html, body {
     height: 100%;
     width: 100%;
-    background-image: url('https://img.freepik.com/free-photo/freshly-made-meal-rustic-crockery-bowl-generated-by-ai_188544-29194.jpg?t=st=1738949012~exp=1738952612~hmac=253e1828604b1baa7ff7b6da2a658ddfc0f0bbf3f8abf4e21daf6ec80cf6fd8b&w=2000');
+    background-image: url('../../images/premium_photo-1723291306365-841e10185b6f.avif'); /* ✅ Correct Path */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     font-family: Arial, sans-serif;
-    z-index: -1;
+    margin: 0;
+    padding: 0;
 }
+
+
 
 .container {
     display: flex;
@@ -26,7 +29,7 @@ html, body {
 }
 
 .card {
-    background-color: #1f5757; /* ✅ Optional transparency */
+    background-color: #2a6d4d; /* ✅ Optional transparency */
     padding: 32px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

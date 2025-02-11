@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UseLogin } from "../../logics/useLogin.js";
-import Cookies from 'js-cookie';
+import { useAuth } from "../../auth/authContext.jsx";  // ✅ Import useAuth
+
 import "./login.css";
 
 export const Login = () => {
@@ -9,23 +10,20 @@ export const Login = () => {
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
+    const { login } = useAuth();  // ✅ Use login from AuthContext
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const credentials = { email, password };
 
         try {
-            const data = await UseLogin(credentials); // Assuming UseLogin is handling the login request
+            const data = await UseLogin(credentials); // ✅ API response should contain token & user
 
-            // Store token in cookie with an expiration time (e.g., 30 days)
-            Cookies.set("token", data.token, { expires: 30 });
+            // ✅ Store token and user in AuthContext
+            login(data.token, data.user);  
 
-            // Store email in sessionStorage
-            sessionStorage.setItem("email", email);
-
-            alert("Login Successful");
-            navigate("/");
+            alert("Login Successful!");
+            navigate("/");  // Redirect to homepage
         } catch (error) {
             setErrorMessage(error.message);
         }
@@ -37,8 +35,7 @@ export const Login = () => {
                 <img src="/MealMate.png" alt="MealPlanner Logo" className="logo" />
                 <div className="header">
                     <h3 className="title">Welcome Back</h3>
-                    <h2 className="subtitle"> Welcome to MealMate</h2>
-                   
+                    <h2 className="subtitle">Welcome to MealMate</h2>
                 </div>
 
                 <form onSubmit={handleSubmit}>
@@ -73,9 +70,7 @@ export const Login = () => {
 
                 <div className="divider">OR</div>
 
-                <button className="googleButton">
-                    Sign in with Google
-                </button>
+                <button className="googleButton">Sign in with Google</button>
 
                 <p className="signup">
                     Don’t have an account?{" "}
