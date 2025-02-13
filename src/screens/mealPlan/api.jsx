@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 const HOST = "http://localhost:8081/";
 
@@ -18,14 +18,21 @@ export const fetchMealPlans = async (userId, token) => {
 };
 
 export const addMeal = async (userId, token, mealData) => {
-  const response = await axios.post(`${HOST}user/${userId}/meal-planner/add-food`, mealData, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.post(
+    `${HOST}user/${userId}/meal-planner/add-food`,
+    mealData,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
   return response.data;
 };
 
 export const removeMeal = async (userId, token, mealPlannerId) => {
-  await axios.delete(`${HOST}user/${userId}/meal-planner/food/${mealPlannerId}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  await axios.delete(
+    `${HOST}user/${userId}/meal-planner/food/${mealPlannerId}`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
 };
