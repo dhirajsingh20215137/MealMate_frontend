@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* Add in index.css if not present */
+.scrollbar-thin::-webkit-scrollbar {
+    width: 2px;
+  }
+  .scrollbar-thumb-gray-400 {
+    background: #9ca3af;
+  }
+  .scrollbar-track-gray-200 {
+    background: #e5e7eb;
+  }
