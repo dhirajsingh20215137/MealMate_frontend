@@ -3,86 +3,189 @@ import { useAuth } from "../../../auth/index";
 import { fetchMeals, addMeal, updateMeal, deleteMeal } from "../api";
 import MealForm from "../components/MealForm";
 import MealCard from "../components/MealCard";
-import MealCarousel from "../components/MealCarousel"; // ✅ Import Carousel
+import { Grid, Box, Typography, Paper, Snackbar, Alert } from "@mui/material";
 import "../../../index.css";
 
 export default function MealLibraryContainer() {
   const { user, token } = useAuth();
   const [meals, setMeals] = useState([]);
-  const [meal, setMeal] = useState({ foodName: "", calories: "", proteins: "", carbs: "", foodType: "", quantityUnit: "", imageUrl: "" });
+  const [error, setError] = useState("");
+  const [alertMessage, setAlertMessage] = useState({ message: "", severity: "" });
+
+  const isAdmin = user?.userType === "ADMIN";
+
+  const [meal, setMeal] = useState({
+    foodName: "",
+    calories: "",
+    proteins: "",
+    carbs: "",
+    quantityUnit: "GRAMS",
+    foodType: isAdmin ? "UNIVERSAL_FOOD" : "CUSTOM_FOOD",
+    imageUrl: "",
+  });
+
   const [isEditing, setIsEditing] = useState(false);
   const [editingFoodId, setEditingFoodId] = useState(null);
-  const [viewMode, setViewMode] = useState("grid"); // ✅ Toggle view: grid or carousel
+
+
+  useEffect(() => {  console.log("This is the 1st useEffect")}, [meals]);
+
 
   useEffect(() => {
-    if (user?.userId) {
-      fetchMeals(user.userId, token).then(setMeals);
-    }
-  }, [user?.userId]);
 
-  const handleChange = (e) => setMeal({ ...meal, [e.target.name]: e.target.value });
+    fetchMealsData();
+    
+  }, []);
+
+  const fetchMealsData = async () => {
+
+    try {   
+      const data = await fetchMeals(user.userId, token);
+      setMeals(data);
+    } catch {
+      setError("Failed to fetch meals.");
+    }
+
+    console.log("meals", meals);
+  };
+
+ 
+  const handleChange = (e) => {
+    setMeal((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) setMeal((prev) => ({ ...prev, imageUrl: URL.createObjectURL(file) }));
   };
+  
 
   const handleSubmit = async () => {
-    if (isEditing) {
-      const updated = await updateMeal(user.userId, token, editingFoodId, meal);
-      setMeals((prev) => prev.map((item) => (item.foodId === editingFoodId ? { ...item, ...updated } : item)));
-      setIsEditing(false);
-      setEditingFoodId(null);
-    } else {
+    setAlertMessage({ message: "", severity: "" });
+  
+    try {
       const fileInput = document.querySelector('input[type="file"]');
-      const file = fileInput?.files[0];
-      const newMeal = await addMeal(user.userId, token, meal, file);
-      setMeals((prev) => [...prev, newMeal]);
+      const file = fileInput?.files[0] || null;
+  
+      if (isEditing) {
+        await updateMeal(user.userId, token, editingFoodId, meal);
+        setAlertMessage({ message: "Meal updated successfully!", severity: "success" });
+        
+      } else {
+        await addMeal(user.userId, token, meal, file);
+        setAlertMessage({ message: "Meal added successfully!", severity: "success" });
+      }
+  
+      fetchMealsData(); // 🔄 Trigger re-fetch after adding/updating a meal
+    } catch {
+      setAlertMessage({ message: "Something went wrong.", severity: "error" });
     }
-    setMeal({ foodName: "", calories: "", proteins: "", carbs: "", foodType: "custom_food", quantityUnit: "count", imageUrl: "" });
+  
+    setMeal({
+      foodName: "",
+      calories: "",
+      proteins: "",
+      carbs: "",
+      quantityUnit: "GRAMS",
+      foodType: isAdmin ? "UNIVERSAL_FOOD" : "CUSTOM_FOOD",
+      imageUrl: "",
+    });
+  
+    setIsEditing(false);
+    setEditingFoodId(null);
   };
-
-  const handleEdit = (meal) => {
-    setMeal(meal);
+  
+ 
+  const handleEdit = (selectedMeal) => {
+    if (
+      (isAdmin && selectedMeal.foodType === "CUSTOM_FOOD") ||
+      (!isAdmin && selectedMeal.foodType === "UNIVERSAL_FOOD")
+    ) {
+      setAlertMessage({ message: "You cannot edit this meal type.", severity: "error" });
+      return;
+    }
+    setMeal(selectedMeal);
     setIsEditing(true);
-    setEditingFoodId(meal.foodId);
+    setEditingFoodId(selectedMeal.foodId);
   };
 
-  const handleDelete = async (foodId) => {
-    await deleteMeal(user.userId, token, foodId);
-    setMeals((prev) => prev.filter((item) => item.foodId !== foodId));
+  const handleDelete = async (foodId, foodType) => {
+    if ((isAdmin && foodType === "CUSTOM_FOOD") || (!isAdmin && foodType === "UNIVERSAL_FOOD")) {
+      setAlertMessage({ message: "You cannot delete this meal type.", severity: "error" });
+      return;
+    }
+
+    try {
+      await deleteMeal(user.userId, token, foodId);
+      setMeals((prev) => prev.filter((item) => item.foodId !== foodId));
+      setAlertMessage({ message: "Meal deleted successfully!", severity: "success" });
+    } catch {
+      setError("Failed to delete meal.");
+    }
   };
 
   return (
-    <div className="mt-20 px-4 md:px-10">
+    <Box sx={{ mt: 10, px: { xs: 2, md: 5 }, pb: 5 }}>
+      {/* Error Snackbar */}
+      <Snackbar open={!!error} autoHideDuration={3000} onClose={() => setError("")}>
+        <Alert severity="error" sx={{ width: "100%" }}>
+          {error}
+        </Alert>
+      </Snackbar>
+
+      {/* Alert Snackbar */}
+      <Snackbar
+        open={!!alertMessage.message}
+        autoHideDuration={3000}
+        onClose={() => setAlertMessage({ message: "", severity: "" })}
+      >
+        <Alert severity={alertMessage.severity} sx={{ width: "100%" }}>
+          {alertMessage.message}
+        </Alert>
+      </Snackbar>
+
       {/* Meal Form */}
-      <div className="grid grid-cols-1 gap-4 p-4 rounded-xl top-10 z-10 h-auto max-w-xl mx-auto" style={{ backgroundColor: "#6A9C89" }}>
-        <MealForm meal={meal} isEditing={isEditing} handleChange={handleChange} handleImageChange={handleImageChange} handleSubmit={handleSubmit} />
-      </div>
+      <Grid container justifyContent="center">
+        <Grid item xs={12} sm={8} md={6}>
+          <Paper elevation={4} sx={{ padding: 3, borderRadius: 2, backgroundColor: "#6A9C89" }}>
+            <MealForm
+              meal={meal}
+              setMeal={setMeal}
+              isEditing={isEditing}
+              handleImageChange={handleImageChange}
+              handleSubmit={handleSubmit}
+              user={user}
+            />
+          </Paper>
+        </Grid>
+      </Grid>
 
-      {/* View Toggle Button */}
-      <div className="flex justify-end mt-4">
-        <button
-          onClick={() => setViewMode(viewMode === "grid" ? "carousel" : "grid")}
-          className="bg-[#16423C] text-white px-4 py-2 rounded-md shadow-md transition-transform hover:scale-105"
-        >
-          {viewMode === "grid" ? "Switch to Carousel View" : "Switch to Grid View"}
-        </button>
-      </div>
+      {/* Meal Library Section */}
+      <Box sx={{ mt: 5, textAlign: "center" }}>
+        <Typography variant="h5" fontWeight="bold" color="gray.700">
+          Your Meals
+        </Typography>
+      </Box>
 
-      {/* Meals Section */}
-      <div className="mt-8 px-2 h-[60vh] overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 rounded-xl">
-        <h2 className="text-2xl font-bold text-gray-700 mb-4">Your Meals</h2>
-
-        {viewMode === "grid" ? (
-          <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-            {meals.map((item) => (
-              <MealCard key={item.foodId} meal={item} onEdit={handleEdit} onDelete={handleDelete} />
-            ))}
-          </div>
-        ) : (
-          <MealCarousel meals={meals} onEdit={handleEdit} onDelete={handleDelete} />
-        )}
-      </div>
-    </div>
+      {/* Meals Grid */}
+      <Grid container spacing={2} sx={{ mt: 3 }}>
+        {meals.map((item, index) => (
+          <Grid 
+            item xs={6} sm={4} md={3} lg={2} 
+            key={item.foodId ? `meal-${item.foodId}` : `index-${index}`}
+          >
+            <MealCard
+              meal={item}
+              onEdit={handleEdit}
+              onDelete={() => handleDelete(item.foodId, item.foodType)}
+            />
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 }

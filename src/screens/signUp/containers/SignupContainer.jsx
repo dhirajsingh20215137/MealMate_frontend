@@ -9,6 +9,12 @@ const SignupContainer = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    gender: "",
+    weight: "",
+    height: "",
+    targetedCarbs: "",
+    targetedProtein: "",
+    targetedCalories: "",
   });
 
   const [passwordError, setPasswordError] = useState("");
@@ -18,16 +24,16 @@ const SignupContainer = () => {
 
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
-    setPasswordError(""); 
+    setPasswordError("");
     setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { email, password, confirmPassword } = formData;
+    const { email, password, confirmPassword, gender, weight, height, targetedCarbs, targetedProtein, targetedCalories } = formData;
 
-    if (!email || !password || !confirmPassword) {
+    if (!email || !password || !confirmPassword ) {
       setError("All fields are required");
       return;
     }
@@ -38,7 +44,16 @@ const SignupContainer = () => {
     }
 
     try {
-      const data = await signup({ email, password });
+      const data = await signup({
+        email,
+        password,
+        gender:gender?gender:null,
+        weight: parseFloat(weight),
+        height: parseFloat(height),
+        targetedCarbs: parseFloat(targetedCarbs),
+        targetedProtein: parseFloat(targetedProtein),
+        targetedCalories: parseFloat(targetedCalories),
+      });
 
       if (data && data.token) {
         Cookies.set("token", data.token, { expires: 30 });
@@ -56,7 +71,15 @@ const SignupContainer = () => {
 
   return (
     <SignupForm
-      formData={formData}
+      email={formData.email}
+      password={formData.password}
+      confirmPassword={formData.confirmPassword}
+      gender={formData.gender}
+      weight={formData.weight}
+      height={formData.height}
+      targetedCarbs={formData.targetedCarbs}
+      targetedProtein={formData.targetedProtein}
+      targetedCalories={formData.targetedCalories}
       handleChange={handleChange}
       handleSubmit={handleSubmit}
       passwordError={passwordError}

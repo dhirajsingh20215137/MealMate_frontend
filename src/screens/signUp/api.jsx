@@ -1,10 +1,7 @@
-import { z } from "zod";
+
 import { useState } from "react";
 
-export const signupSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters long"),
-});
+
 export const UseSignup = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
