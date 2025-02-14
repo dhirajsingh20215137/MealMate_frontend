@@ -18,13 +18,13 @@ const LoginForm = ({ email, password, handleChange, handleSubmit, loading, error
                     <Typography variant="h6">Sign In to Your Account</Typography>
 
                     <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-                        {/* Email Field */}
+                    
                         <TextField
-                            label={
-                                <>
-                                    Email <span className="text-red-500">*</span>
-                                </>
-                            }
+                            // label={
+                            //     <>
+                            //         Email <span className="text-red-500">*</span>
+                            //     </>
+                            // }
                             type="email"
                             name="email"
                             value={email}
@@ -38,13 +38,13 @@ const LoginForm = ({ email, password, handleChange, handleSubmit, loading, error
                             InputLabelProps={{ className: "text-red-500" }}
                         />
 
-                        {/* Password Field */}
+                       
                         <TextField
-                            label={
-                                <>
-                                    Password <span className="text-red-500">*</span>
-                                </>
-                            }
+                            // label={
+                            //     <>
+                            //         Password <span className="text-red-500">*</span>
+                            //     </>
+                            // }
                             type="password"
                             name="password"
                             placeholder="Password"
@@ -59,15 +59,21 @@ const LoginForm = ({ email, password, handleChange, handleSubmit, loading, error
                         />
 
 
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            fullWidth
-                            disabled={loading}
-                            className="bg-[#16423C] text-balck hover:bg-green-700"
-                        >
-                            {loading ? <CircularProgress size={24} color="inherit" /> : "Sign In"}
-                        </Button>
+<Grid item xs={12}>
+              <Button
+                type="submit"
+                variant="contained"
+                fullWidth
+                disabled={loading}
+                className="!bg-[#136A5A] text-white hover:!bg-[#16423C]"
+              >
+                {loading ? (
+                  <CircularProgress size={24} color="inherit" />
+                ) : (
+                  "Login"
+                )}
+              </Button>
+            </Grid>
                     </form>
 
                     {error && <Typography className="text-red-400 mt-2">{error}</Typography>}

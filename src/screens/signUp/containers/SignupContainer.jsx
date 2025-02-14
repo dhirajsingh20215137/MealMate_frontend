@@ -28,8 +28,8 @@ const SignupContainer = () => {
     setError("");
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+   
 
     const { email, password, confirmPassword, gender, weight, height, targetedCarbs, targetedProtein, targetedCalories } = formData;
 

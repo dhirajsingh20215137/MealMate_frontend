@@ -19,7 +19,7 @@ export default function MealLibraryContainer() {
     calories: "",
     proteins: "",
     carbs: "",
-    quantityUnit: "GRAMS",
+    quantityUnit: "",
     foodType: isAdmin ? "UNIVERSAL_FOOD" : "CUSTOM_FOOD",
     imageUrl: "",
   });
@@ -80,7 +80,7 @@ export default function MealLibraryContainer() {
         setAlertMessage({ message: "Meal added successfully!", severity: "success" });
       }
   
-      fetchMealsData(); // 🔄 Trigger re-fetch after adding/updating a meal
+      fetchMealsData(); 
     } catch {
       setAlertMessage({ message: "Something went wrong.", severity: "error" });
     }
@@ -90,7 +90,7 @@ export default function MealLibraryContainer() {
       calories: "",
       proteins: "",
       carbs: "",
-      quantityUnit: "GRAMS",
+      quantityUnit: "",
       foodType: isAdmin ? "UNIVERSAL_FOOD" : "CUSTOM_FOOD",
       imageUrl: "",
     });

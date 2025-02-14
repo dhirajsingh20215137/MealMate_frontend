@@ -57,7 +57,7 @@ export default function MealForm({ meal, setMeal, isEditing, handleImageChange, 
                 select
                 label="Quantity Unit"
                 name="quantityUnit"
-                value={meal.quantityUnit || "GRAMS"}
+                value={meal.quantityUnit}
                 onChange={handleChange}
                 variant="outlined"
                 size="small"
@@ -103,16 +103,25 @@ export default function MealForm({ meal, setMeal, isEditing, handleImageChange, 
 
         {/* Submit Button */}
         <Grid item xs={12}>
-          <Button
-            fullWidth
-            variant="contained"
-            color={isEditing ? "success" : "primary"}
-            onClick={handleSubmit}
-            sx={{ fontWeight: "bold" }}
-          >
-            {isEditing ? "Update Meal" : "Add Meal"}
-          </Button>
-        </Grid>
+        <Button
+  fullWidth
+  variant="contained"
+  onClick={handleSubmit}
+  className="bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-4 rounded focus:ring-0 focus:outline-none active:bg-green-700"
+  disableRipple
+  disableFocusRipple
+  disableElevation
+  sx={{
+    '&:focus': { backgroundColor: '#166534' }, // Dark green on focus
+    '&:active': { backgroundColor: '#14532d' }, // Even darker green on click
+  }}
+>
+  {isEditing ? "Update Meal" : "Add Meal"}
+</Button>
+
+
+</Grid>
+
       </Grid>
     </Paper>
   );

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 
-/* Add in index.css if not present */
+
 .scrollbar-thin::-webkit-scrollbar {
     width: 2px;
   }

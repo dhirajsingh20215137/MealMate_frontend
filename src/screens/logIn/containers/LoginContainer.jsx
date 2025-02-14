@@ -15,7 +15,6 @@ const LoginContainer = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
 
-    // Handle input changes dynamically
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -40,7 +39,7 @@ const LoginContainer = () => {
         <LoginForm 
             email={formData.email}
             password={formData.password}
-            handleChange={handleChange} // Updated to handle both fields dynamically
+            handleChange={handleChange} 
             handleSubmit={handleSubmit}
             errorMessage={errorMessage}
         />

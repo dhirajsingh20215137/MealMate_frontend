@@ -103,7 +103,7 @@ const SignupForm = ({
                 select
                 label="Gender"
                 name="gender"
-                value={gender || ""} // Ensure it doesn't show "undefined"
+                value={gender || ""} 
                 onChange={handleChange}
                 fullWidth
                 variant="outlined"

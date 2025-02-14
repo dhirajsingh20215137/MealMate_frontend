@@ -42,6 +42,7 @@ const PlanMealContainer = () => {
   };
 
   return (
+    
     <div className="max-w-4xl mx-auto mt-10 p-6 shadow-md rounded-lg" style={{ backgroundColor: '#6A9C89' }}>
   <h1 className="text-3xl font-semibold text-white mb-6">Plan Your Meal</h1>
       <div className="flex flex-col md:flex-row gap-4 mb-6">

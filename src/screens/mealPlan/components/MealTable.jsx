@@ -30,7 +30,7 @@ const MealTable = ({ mealPlans, mealType, userFoods, handleRemove }) => (
                 <td className="px-4 py-2">{meal.proteins || foodDetails?.proteins}</td>
                 <td className="px-4 py-2">{meal.carbs || foodDetails?.carbs}</td>
                 <td className="px-4 py-2">
-                <IconButton
+                  <IconButton
   onClick={() => handleRemove(meal.mealPlannerId)}
   sx={{ color: '#16423C' }}  // Applying the color
 >

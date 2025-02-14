@@ -61,7 +61,7 @@ const ProfileContainer = () => {
     if (loading) return <CircularProgress className="m-auto" />;
 
     return (
-        <div className="flex flex-col items-center p-6 bg-white 400 min-h-screen">
+        <div className="flex flex-col items-center p-6  400 min-h-screen">
             <Notification message={notification.message} type={notification.type} onClose={() => setNotification({ message: "", type: "" })} />
 
             <h2 className="text-2xl font-bold mb-4">User Profile</h2>
