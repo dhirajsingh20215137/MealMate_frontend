@@ -4,7 +4,6 @@ import { useProfileApi } from "../api";
 import ProfileForm from "../components/ProfileForm";
 import ProfilePhoto from "../components/ProfilePhoto";
 import Notification from "../components/Notification";
-import "../../../index.css";
 
 const ProfileContainer = () => {
     const { getProfile, updateProfile, uploadPhoto } = useProfileApi();
@@ -12,6 +11,10 @@ const ProfileContainer = () => {
     const [notification, setNotification] = useState({ message: "", type: "" });
     const [fileErrorMessage, setFileErrorMessage] = useState("");
     const [loading, setLoading] = useState(true);
+    const [passwordData, setPasswordData] = useState({ currentPassword: "", newPassword: "", confirmPassword:""});
+    //const [passwordError, setPasswordError] = useState("");
+    const [passwordLoading, setPasswordLoading] = useState(false);
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -37,7 +40,6 @@ const ProfileContainer = () => {
         if (file && (file.type === "image/png" || file.type === "image/jpeg")) {
             try {
                 const data = await uploadPhoto(file);
-                console.log("handlePhotoChange",data);
                 setProfile((prev) => ({ ...prev, userUrl: data.userUrl }));
                 setNotification({ message: "Photo uploaded successfully!", type: "success" });
             } catch {
@@ -58,17 +60,40 @@ const ProfileContainer = () => {
         }
     };
 
+    const handlePasswordChange = async () => {
+    
+        if (passwordData.newPassword !== passwordData.confirmPassword) {
+            setNotification({ message: "New password and confirm password do not match.", type: "error" });
+            return;
+        }
+    
+        setPasswordLoading(true);
+        try {
+            await updateProfile({
+                currentPassword: passwordData.currentPassword,
+                newPassword: passwordData.newPassword,
+            });
+    
+            setNotification({ message: "Password updated successfully!", type: "success" });
+            setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" });
+        } catch (error) {
+            console.log("error",error)
+            setNotification({ message: error.response?.data?.message || "Failed to update password.", type: "error" });
+        } finally {
+            setPasswordLoading(false);
+        }
+    };
+
     if (loading) return <CircularProgress className="m-auto" />;
 
     return (
-        <div className="flex flex-col items-center p-6  400 min-h-screen">
+        <div className="flex flex-col items-center p-6 min-h-screen">
             <Notification message={notification.message} type={notification.type} onClose={() => setNotification({ message: "", type: "" })} />
 
             <h2 className="text-2xl font-bold mb-4">User Profile</h2>
-            <div className="flex  rounded-lg shadow-md p-6 gap-8"
-             style={{ backgroundColor: "#6A9C89" }}>
+            <div className="flex rounded-lg shadow-md p-6 gap-8" style={{ backgroundColor: "#6A9C89" }}>
                 <ProfilePhoto userUrl={profile.userUrl} onPhotoChange={handlePhotoChange} fileErrorMessage={fileErrorMessage} />
-                <ProfileForm profile={profile} onChange={handleChange} onSubmit={handleSubmit} />
+                <ProfileForm profile={profile} onChange={handleChange} onSubmit={handleSubmit} passwordData={passwordData} setPasswordData={setPasswordData} handlePasswordChange={handlePasswordChange} />
             </div>
         </div>
     );
