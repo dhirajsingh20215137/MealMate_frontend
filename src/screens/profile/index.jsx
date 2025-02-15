@@ -1,4 +1,4 @@
-import ProfileContainer from "./containers/ProfileContainer";
+import ProfileContainer from "./containers/Profile";
 
 const ProfilePage = () => {
     return <ProfileContainer />;

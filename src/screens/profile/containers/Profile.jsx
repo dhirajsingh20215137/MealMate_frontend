@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
-import { CircularProgress } from "@mui/material";
+import ProfileComponent from "../components/Profile";
 import { useProfileApi } from "../api";
-import ProfileForm from "../components/ProfileForm";
-import ProfilePhoto from "../components/ProfilePhoto";
-import Notification from "../components/Notification";
+import { CircularProgress } from "@mui/material";
 
 const ProfileContainer = () => {
     const { getProfile, updateProfile, uploadPhoto } = useProfileApi();
@@ -11,10 +9,8 @@ const ProfileContainer = () => {
     const [notification, setNotification] = useState({ message: "", type: "" });
     const [fileErrorMessage, setFileErrorMessage] = useState("");
     const [loading, setLoading] = useState(true);
-    const [passwordData, setPasswordData] = useState({ currentPassword: "", newPassword: "", confirmPassword:""});
-    //const [passwordError, setPasswordError] = useState("");
+    const [passwordData, setPasswordData] = useState({ currentPassword: "", newPassword: "", confirmPassword: "" });
     const [passwordLoading, setPasswordLoading] = useState(false);
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,11 +25,6 @@ const ProfileContainer = () => {
         };
         fetchData();
     }, []);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setProfile((prev) => ({ ...prev, [name]: value }));
-    };
 
     const handlePhotoChange = async (e) => {
         const file = e.target.files[0];
@@ -61,23 +52,21 @@ const ProfileContainer = () => {
     };
 
     const handlePasswordChange = async () => {
-    
         if (passwordData.newPassword !== passwordData.confirmPassword) {
             setNotification({ message: "New password and confirm password do not match.", type: "error" });
             return;
         }
-    
+
         setPasswordLoading(true);
         try {
             await updateProfile({
                 currentPassword: passwordData.currentPassword,
                 newPassword: passwordData.newPassword,
             });
-    
+
             setNotification({ message: "Password updated successfully!", type: "success" });
             setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" });
         } catch (error) {
-            console.log("error",error)
             setNotification({ message: error.response?.data?.message || "Failed to update password.", type: "error" });
         } finally {
             setPasswordLoading(false);
@@ -87,15 +76,19 @@ const ProfileContainer = () => {
     if (loading) return <CircularProgress className="m-auto" />;
 
     return (
-        <div className="flex flex-col items-center p-6 min-h-screen">
-            <Notification message={notification.message} type={notification.type} onClose={() => setNotification({ message: "", type: "" })} />
-
-            <h2 className="text-2xl font-bold mb-4">User Profile</h2>
-            <div className="flex rounded-lg shadow-md p-6 gap-8" style={{ backgroundColor: "#6A9C89" }}>
-                <ProfilePhoto userUrl={profile.userUrl} onPhotoChange={handlePhotoChange} fileErrorMessage={fileErrorMessage} />
-                <ProfileForm profile={profile} onChange={handleChange} onSubmit={handleSubmit} passwordData={passwordData} setPasswordData={setPasswordData} handlePasswordChange={handlePasswordChange} />
-            </div>
-        </div>
+        <ProfileComponent
+            profile={profile}
+            setProfile={setProfile}
+            notification={notification}
+            setNotification={setNotification}
+            handleSubmit={handleSubmit}
+            handlePasswordChange={handlePasswordChange}
+            handlePhotoChange={handlePhotoChange}
+            fileErrorMessage={fileErrorMessage}
+            passwordData={passwordData}
+            setPasswordData={setPasswordData}
+            passwordLoading={passwordLoading}
+        />
     );
 };
 

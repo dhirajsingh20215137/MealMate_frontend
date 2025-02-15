@@ -23,14 +23,6 @@ export const useProfileApi = () => {
         });
     };
 
-    const updatePassword = async (passwordData) => {
-        return await axios.post(`${HOST}user/${userId}/update-password`, passwordData, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            },
-        });
-    };
 
     const uploadPhoto = async (file) => {
         const formData = new FormData();
@@ -42,5 +34,5 @@ export const useProfileApi = () => {
         return response.data;
     };
 
-    return { getProfile, updateProfile, updatePassword, uploadPhoto };
+    return { getProfile, updateProfile,  uploadPhoto };
 };
