@@ -7,12 +7,12 @@ export const useProfileApi = () => {
     const userId = user?.userId;
 
     const getProfile = async () => {
-         console.log("thsi is before api call")
+      
         const response = await axios.get(`${HOST}/user/${userId}`, {
             headers: { Authorization: `Bearer ${token}` },
         });
 
-        console.log("this is after api call");
+       
         return response.data;
     };
 

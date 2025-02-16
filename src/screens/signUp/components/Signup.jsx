@@ -33,7 +33,7 @@ const SignupForm = ({
       alignItems="center"
       minHeight="80vh"
       padding={4}
-      backgroundColor="white"
+     
     >
 <Card className="p-10 rounded-xl shadow-lg w-[40vw]  bg-[#6A9C89] text-center text-white max-h-[90vh] ">
 <img

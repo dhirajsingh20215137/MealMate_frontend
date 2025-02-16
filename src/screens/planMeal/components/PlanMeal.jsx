@@ -34,7 +34,7 @@ const PlanMealComponent = ({
       borderRadius={2}
       sx={{ backgroundColor: "#6A9C89" }}
     >
-      <Box component="h1" sx={{ color: "white", fontSize: "24px", mb: 3 }}>
+      <Box component="h1" className="text-white text-2xl mb-3 text-center text-bold">
         Plan Your Meal
       </Box>
 

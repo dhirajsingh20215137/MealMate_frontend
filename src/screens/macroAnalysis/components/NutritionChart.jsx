@@ -5,7 +5,6 @@ import {
   Button,
   ButtonGroup,
   CircularProgress,
-  Grid,
   Paper,
   Typography,
 } from "@mui/material";
@@ -35,7 +34,7 @@ const NutritionChart = ({ selectedType, setSelectedType, stats, loading, error }
           {
             label: "Achieved",
             data: [stats.dailyAchieved, stats.weeklyAchieved, stats.monthlyAchieved],
-            backgroundColor: "#FF6B6B",
+            backgroundColor: "White",
             borderRadius: 4,
           },
         ],
@@ -46,7 +45,7 @@ const NutritionChart = ({ selectedType, setSelectedType, stats, loading, error }
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { position: "top" },
+      legend: { position: "top", labels: { color: "#fff" } },
       tooltip: {
         backgroundColor: "#333",
         titleColor: "#fff",
@@ -60,14 +59,14 @@ const NutritionChart = ({ selectedType, setSelectedType, stats, loading, error }
         ticks: {
           stepSize: 10000,
           maxTicksLimit: 6,
-          color: "#555",
+          color: "#fff",
           font: { size: 12, weight: "bold" },
           callback: (value) => `${value / 1000}k`,
         },
         grid: { color: "#E0E0E0", borderDash: [4, 4] },
       },
       x: {
-        ticks: { color: "#555", font: { size: 12, weight: "bold" } },
+        ticks: { color: "#fff", font: { size: 12, weight: "bold" } },
         grid: { display: false },
         categoryPercentage: 0.6,
         barPercentage: 0.8,
@@ -80,37 +79,47 @@ const NutritionChart = ({ selectedType, setSelectedType, stats, loading, error }
 
   return (
     <Box sx={{ p: 4 }}>
-      <Paper elevation={3} sx={{ p: 4, maxWidth: "900px", mx: "auto" }}>
+      <Paper
+        elevation={3}
+        sx={{
+          p: 4,
+          maxWidth: "900px",
+          mx: "auto",
+          backgroundColor: "#6A9C89",
+          color: "#fff",
+        }}
+      >
         <Typography variant="h4" align="center" fontWeight="bold" mb={3}>
           Nutrition Analysis
         </Typography>
 
         {/* Button Group for Nutrient Selection */}
         <ButtonGroup fullWidth sx={{ mb: 3 }}>
-          {["carbs", "calories", "proteins"].map((type) => (
-            <Button
-              key={type}
-              onClick={() => setSelectedType(type)}
-              sx={{
-                backgroundColor: selectedType === type ? "#1F5756" : "#f9f9f9",
-                color: selectedType === type ? "#fff" : "#000",
-                border: "1px solid #1F5756",
-                fontWeight: "bold",
-                "&:hover": {
-                  backgroundColor: "#144442",
-                  color: "#fff",
-                },
-              }}
-            >
-              {type.charAt(0).toUpperCase() + type.slice(1)}
-            </Button>
-          ))}
-        </ButtonGroup>
+  {["carbs", "calories", "proteins"].map((type) => (
+    <Button
+      key={type}
+      onClick={() => setSelectedType(type)}
+      sx={{
+        backgroundColor: "#fff", // Default white background
+        color: "#000", // Default black text
+        border: "1px solid #15423C",
+        fontWeight: "bold",
+        "&:hover": {
+          backgroundColor: "#15423C", // Background on hover
+          color: "#fff", // Text color on hover
+        },
+      }}
+    >
+      {type.charAt(0).toUpperCase() + type.slice(1)}
+    </Button>
+  ))}
+</ButtonGroup>
+
 
         {/* Loading & Error Handling */}
         {loading ? (
           <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
-            <CircularProgress />
+            <CircularProgress sx={{ color: "#fff" }} />
           </Box>
         ) : error ? (
           <Typography color="error" align="center" variant="h6">

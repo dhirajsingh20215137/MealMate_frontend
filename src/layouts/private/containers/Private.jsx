@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Private  from "../components";
+import Private from "../components";
 import { useAuth } from "../../../auth";
 
 const PrivateContainer = () => {

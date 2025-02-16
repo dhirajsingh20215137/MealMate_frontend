@@ -16,9 +16,23 @@
   
 
   /* Global background image */
-body {
+  body {
     @apply bg-cover bg-center bg-no-repeat;
-    background-image: url('src/assets/images/brooke-lark-GTMGG-xvxdU-unsplash.jpg'); /* Correct the path */
     min-height: 100vh;
-  }
-  
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('src/assets/images/jason-dent-eB1ziPSixlQ-unsplash.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.2; /* Adjust opacity */
+    z-index: -1; /* Keeps it behind content */
+}

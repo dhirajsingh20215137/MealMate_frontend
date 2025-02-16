@@ -30,9 +30,9 @@ export default function MealLibraryContainer() {
   const [isEditing, setIsEditing] = useState(false);
   const [editingFoodId, setEditingFoodId] = useState(null);
 
-  useEffect(() => {
-    console.log("This is the 1st useEffect");
-  }, [meals]);
+  // useEffect(() => {
+   
+  // }, [meals]);
 
   useEffect(() => {
     fetchMealsData();
@@ -46,7 +46,7 @@ export default function MealLibraryContainer() {
       setError("Failed to fetch meals.");
     }
 
-    console.log("meals", meals);
+  
   };
 
   const handleChange = (e) => {
@@ -182,9 +182,14 @@ export default function MealLibraryContainer() {
         </Grid>
       </Grid>
       <Box sx={{ mt: 5, textAlign: "center" }}>
-        <Typography variant="h5" fontWeight="bold" color="gray.700">
-          Your Meals
-        </Typography>
+      <Typography
+  variant="h5"
+  fontWeight="bold"
+  className="bg-[#6A9C89] text-white px-5 py-2 rounded-lg text-center inline-block cursor-pointer transition duration-300 hover:bg-[#0F312A]"
+>
+  Your Meals
+</Typography>
+
       </Box>
       <Grid container spacing={2} sx={{ mt: 3 }}>
         {meals.map((item, index) => (

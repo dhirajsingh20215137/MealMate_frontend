@@ -30,11 +30,12 @@ export default function MealForm({
   return (
     <Paper elevation={3} className="p-6 rounded-lg bg-[#6A9C89] shadow-md">
       <Typography
-        variant="h4"
-        className="font-bold text-black-800 mb-8  text-center"
-      >
-        {isEditing ? "Edit Meal" : "Add Meal"}
-      </Typography>
+  variant="h4"
+  className="font-bold text-white mb-8 text-center"
+>
+  {isEditing ? "Edit Meal" : "Add Meal"}
+</Typography>
+
 
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>

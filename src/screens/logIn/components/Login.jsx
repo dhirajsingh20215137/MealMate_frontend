@@ -24,7 +24,7 @@ const LoginForm = ({
       justifyContent="center"
       alignItems="center"
       className="min-h-screen bg-fixed p-4"
-      backgroundColor="white"
+     
     >
       <Grid item xs={12} sm={8} md={6} lg={4}>
         <Card className="p-8 rounded-xl shadow-lg w-full text-center bg-[#6A9C89] text-white">

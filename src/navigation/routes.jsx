@@ -1,20 +1,13 @@
-import ProfilePage from "../screens/profile";
-import MealLibraryPage from "../screens/mealLibrary";
-import PlanMealPage from "../screens/planMeal";
-import MacroAnalysisPage from "../screens/macroAnalysis";
-import SignUpPage from "../screens/signUp";
-import LoginPage from "../screens/logIn";
+import { lazy } from "react";
 
 export const privateRoutes = [
-  { path: "/profile", Component: ProfilePage },
-  { path: "/meal-library", Component: MealLibraryPage },
-  { path: "/plan-meal", Component: PlanMealPage },
-  { path: "/nutrition-stats", Component: MacroAnalysisPage },
+  { path: "/profile", Component: lazy(() => import("../screens/profile")) },
+  { path: "/meal-library", Component: lazy(() => import("../screens/mealLibrary")) },
+  { path: "/plan-meal", Component: lazy(() => import("../screens/planMeal")) },
+  { path: "/nutrition-stats", Component: lazy(() => import("../screens/macroAnalysis")) },
 ];
 
 export const publicRoutes = [
-  { path: "/signup", Component: SignUpPage },
-  { path: "/signin", Component: LoginPage },
+  { path: "/signup", Component: lazy(() => import("../screens/signUp")) },
+  { path: "/signin", Component: lazy(() => import("../screens/logIn")) },
 ];
-
-//loadable

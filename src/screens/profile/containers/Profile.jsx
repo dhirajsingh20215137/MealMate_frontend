@@ -29,10 +29,8 @@ const ProfileContainer = () => {
 
   const fetchData = async () => {
     try {
-      console.log("thsi is before data");
       const data = await getProfile();
-      console.log("thsi is after data");
-      console.log(data);
+
       setProfile(data);
     } catch {
       setNotification({ message: "Failed to load profile.", type: "error" });
@@ -135,11 +133,16 @@ const ProfileContainer = () => {
       />
 
       {/* Snackbar for notifications */}
-      <Snackbar open={snackbarOpen} 
-      autoHideDuration={500} 
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      onClose={() => setSnackbarOpen(false)}>
-        <Alert severity={notification.type} onClose={() => setSnackbarOpen(false)}>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={500}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        onClose={() => setSnackbarOpen(false)}
+      >
+        <Alert
+          severity={notification.type}
+          onClose={() => setSnackbarOpen(false)}
+        >
           {notification.message}
         </Alert>
       </Snackbar>
