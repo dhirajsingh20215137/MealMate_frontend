@@ -13,3 +13,12 @@
   .scrollbar-track-gray-200 {
     background: #e5e7eb;
   }
+  
+
+  /* Global background image */
+body {
+    @apply bg-cover bg-center bg-no-repeat;
+    background-image: url('src/assets/images/brooke-lark-GTMGG-xvxdU-unsplash.jpg'); /* Correct the path */
+    min-height: 100vh;
+  }
+  

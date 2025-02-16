@@ -1,3 +1,1 @@
-import PublicRoute from "./PublicRoute";
-
-export { PublicRoute }
+export { default as Public } from "./public";

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import Cookies from "js-cookie";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
         const storedToken = Cookies.get("authToken");
         const storedUser = Cookies.get("user");
 
-        if (storedToken && storedUser && storedUser !== "undefined") {
+        if (storedToken) {
             try {
                 setToken(storedToken);
                 setUser(JSON.parse(storedUser));

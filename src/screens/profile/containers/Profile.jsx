@@ -1,95 +1,150 @@
 import { useState, useEffect } from "react";
 import ProfileComponent from "../components/Profile";
+import { CircularProgress, Snackbar, Alert } from "@mui/material";
 import { useProfileApi } from "../api";
-import { CircularProgress } from "@mui/material";
 
 const ProfileContainer = () => {
-    const { getProfile, updateProfile, uploadPhoto } = useProfileApi();
-    const [profile, setProfile] = useState(null);
-    const [notification, setNotification] = useState({ message: "", type: "" });
-    const [fileErrorMessage, setFileErrorMessage] = useState("");
-    const [loading, setLoading] = useState(true);
-    const [passwordData, setPasswordData] = useState({ currentPassword: "", newPassword: "", confirmPassword: "" });
-    const [passwordLoading, setPasswordLoading] = useState(false);
+  const { getProfile, updateProfile, uploadPhoto } = useProfileApi();
+  const [profile, setProfile] = useState({
+    gender: null,
+    weight: "",
+    height: "",
+    targetedCarbs: "",
+    targetedProtein: "",
+    targetedCalories: "",
+    userUrl: "",
+  });
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await getProfile();
-                setProfile(data);
-            } catch {
-                setNotification({ message: "Failed to load profile.", type: "error" });
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchData();
-    }, []);
+  const [notification, setNotification] = useState({ message: "", type: "" });
+  const [fileErrorMessage, setFileErrorMessage] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+  const [passwordLoading, setPasswordLoading] = useState(false);
 
-    const handlePhotoChange = async (e) => {
-        const file = e.target.files[0];
-        if (file && (file.type === "image/png" || file.type === "image/jpeg")) {
-            try {
-                const data = await uploadPhoto(file);
-                setProfile((prev) => ({ ...prev, userUrl: data.userUrl }));
-                setNotification({ message: "Photo uploaded successfully!", type: "success" });
-            } catch {
-                setNotification({ message: "Failed to upload photo.", type: "error" });
-            }
-        } else {
-            setFileErrorMessage("Only PNG or JPEG images are allowed.");
-        }
-    };
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            await updateProfile(profile);
-            setNotification({ message: "Profile updated successfully!", type: "success" });
-        } catch {
-            setNotification({ message: "Failed to update profile.", type: "error" });
-        }
-    };
+  const fetchData = async () => {
+    try {
+      console.log("thsi is before data");
+      const data = await getProfile();
+      console.log("thsi is after data");
+      console.log(data);
+      setProfile(data);
+    } catch {
+      setNotification({ message: "Failed to load profile.", type: "error" });
+      setSnackbarOpen(true);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const handlePasswordChange = async () => {
-        if (passwordData.newPassword !== passwordData.confirmPassword) {
-            setNotification({ message: "New password and confirm password do not match.", type: "error" });
-            return;
-        }
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-        setPasswordLoading(true);
-        try {
-            await updateProfile({
-                currentPassword: passwordData.currentPassword,
-                newPassword: passwordData.newPassword,
-            });
+  const handlePhotoChange = async (e) => {
+    const file = e.target.files[0];
+    if (file && (file.type === "image/png" || file.type === "image/jpeg")) {
+      try {
+        const data = await uploadPhoto(file);
+        setProfile((prev) => ({ ...prev, userUrl: data.userUrl }));
+        setNotification({
+          message: "Photo uploaded successfully!",
+          type: "success",
+        });
+      } catch {
+        setNotification({ message: "Failed to upload photo.", type: "error" });
+      }
+    } else {
+      setFileErrorMessage("Only PNG or JPEG images are allowed.");
+    }
+    setSnackbarOpen(true);
+  };
 
-            setNotification({ message: "Password updated successfully!", type: "success" });
-            setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" });
-        } catch (error) {
-            setNotification({ message: error.response?.data?.message || "Failed to update password.", type: "error" });
-        } finally {
-            setPasswordLoading(false);
-        }
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await updateProfile(profile);
+      setNotification({
+        message: "Profile updated successfully!",
+        type: "success",
+      });
+    } catch {
+      setNotification({ message: "Failed to update profile.", type: "error" });
+    }
+    setSnackbarOpen(true);
+  };
 
-    if (loading) return <CircularProgress className="m-auto" />;
+  const handlePasswordChange = async () => {
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      setNotification({
+        message: "New password and confirm password do not match.",
+        type: "error",
+      });
+      setSnackbarOpen(true);
+      return;
+    }
 
-    return (
-        <ProfileComponent
-            profile={profile}
-            setProfile={setProfile}
-            notification={notification}
-            setNotification={setNotification}
-            handleSubmit={handleSubmit}
-            handlePasswordChange={handlePasswordChange}
-            handlePhotoChange={handlePhotoChange}
-            fileErrorMessage={fileErrorMessage}
-            passwordData={passwordData}
-            setPasswordData={setPasswordData}
-            passwordLoading={passwordLoading}
-        />
-    );
+    setPasswordLoading(true);
+    try {
+      await updateProfile({
+        currentPassword: passwordData.currentPassword,
+        newPassword: passwordData.newPassword,
+      });
+
+      setNotification({
+        message: "Password updated successfully!",
+        type: "success",
+      });
+      setPasswordData({
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
+    } catch (error) {
+      setNotification({
+        message: error.response?.data?.message || "Failed to update password.",
+        type: "error",
+      });
+    } finally {
+      setPasswordLoading(false);
+      setSnackbarOpen(true);
+    }
+  };
+
+  if (loading) return <CircularProgress className="m-auto" />;
+
+  return (
+    <>
+      <ProfileComponent
+        profile={profile}
+        setProfile={setProfile}
+        notification={notification}
+        setNotification={setNotification}
+        handleSubmit={handleSubmit}
+        handlePasswordChange={handlePasswordChange}
+        handlePhotoChange={handlePhotoChange}
+        fileErrorMessage={fileErrorMessage}
+        passwordData={passwordData}
+        setPasswordData={setPasswordData}
+        passwordLoading={passwordLoading}
+      />
+
+      {/* Snackbar for notifications */}
+      <Snackbar open={snackbarOpen} 
+      autoHideDuration={500} 
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      onClose={() => setSnackbarOpen(false)}>
+        <Alert severity={notification.type} onClose={() => setSnackbarOpen(false)}>
+          {notification.message}
+        </Alert>
+      </Snackbar>
+    </>
+  );
 };
 
 export default ProfileContainer;

@@ -1,8 +1,22 @@
-import { TextField, Button, Typography, Grid, Paper, MenuItem } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Typography,
+  Grid,
+  Paper,
+  MenuItem,
+} from "@mui/material";
 
 const QUANTITY_UNITS = ["COUNT", "CUP", "GRAMS", "ML", "SLICE"];
 
-export default function MealForm({ meal, setMeal, isEditing, handleImageChange, handleSubmit, user }) {
+export default function MealForm({
+  meal,
+  setMeal,
+  isEditing,
+  handleImageChange,
+  handleSubmit,
+  user,
+}) {
   const isAdmin = user?.userType === "ADMIN";
 
   const handleChange = (event) => {
@@ -14,31 +28,97 @@ export default function MealForm({ meal, setMeal, isEditing, handleImageChange, 
   };
 
   return (
-    <Paper elevation={3} sx={{ padding: 3, borderRadius: 2, backgroundColor: "white" }}>
-      <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: 2, color: "gray.800" }}>
+    <Paper elevation={3} className="p-6 rounded-lg bg-[#6A9C89] shadow-md">
+      <Typography
+        variant="h4"
+        className="font-bold text-black-800 mb-8  text-center"
+      >
         {isEditing ? "Edit Meal" : "Add Meal"}
       </Typography>
 
       <Grid container spacing={3}>
-        {/* Left Side - Meal Details */}
         <Grid item xs={12} md={6}>
           <Grid container spacing={2}>
-            {["foodName", "calories", "proteins", "carbs"].map((field) => (
-              <Grid item xs={12} key={field}>
-                <TextField
-                  fullWidth
-                  type={["calories", "proteins", "carbs"].includes(field) ? "number" : "text"}
-                  name={field}
-                  label={field.replace(/([A-Z])/g, " $1").toUpperCase()}
-                  value={meal[field] || ""}
-                  onChange={handleChange}
-                  variant="outlined"
-                  size="small"
-                />
-              </Grid>
-            ))}
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                type="text"
+                name="foodName"
+                label="Food Name"
+                value={meal.foodName || ""}
+                onChange={handleChange}
+                variant="outlined"
+                size="small"
+                InputLabelProps={{
+                  className: "!text-white",
+                }}
+                InputProps={{
+                  className: "!text-white placeholder-white !border-white",
+                }}
+                className="border-white-100 text-white-100"
+              />
+            </Grid>
 
-            {/* Fixed Food Type Field Based on User Role */}
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                type="number"
+                name="calories"
+                label="Calories(kcl)"
+                value={meal.calories || ""}
+                onChange={handleChange}
+                variant="outlined"
+                size="small"
+                InputLabelProps={{
+                  className: "!text-white",
+                }}
+                InputProps={{
+                  className: "!text-white placeholder-white !border-white",
+                }}
+                className="border-white-100 text-white-100"
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                type="number"
+                name="proteins"
+                label="Proteins(g)"
+                value={meal.proteins || ""}
+                onChange={handleChange}
+                variant="outlined"
+                size="small"
+                InputLabelProps={{
+                  className: "!text-white",
+                }}
+                InputProps={{
+                  className: "!text-white placeholder-white !border-white",
+                }}
+                className="border-white-100 text-white-100"
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                type="number"
+                name="carbs"
+                label="Carbs(g)"
+                value={meal.carbs || ""}
+                onChange={handleChange}
+                variant="outlined"
+                size="small"
+                InputLabelProps={{
+                  className: "!text-white",
+                }}
+                InputProps={{
+                  className: "!text-white placeholder-white !border-white",
+                }}
+                className="border-white-100 text-white-100"
+              />
+            </Grid>
+
             <Grid item xs={12}>
               <TextField
                 fullWidth
@@ -46,11 +126,18 @@ export default function MealForm({ meal, setMeal, isEditing, handleImageChange, 
                 value={isAdmin ? "UNIVERSAL_FOOD" : "CUSTOM_FOOD"}
                 variant="outlined"
                 size="small"
-                InputProps={{ readOnly: true }} // Make it non-editable
+                InputLabelProps={{
+                  className: "!text-white", 
+                }}
+                InputProps={{
+                  readOnly: true,
+                  className: "!text-white !border-white", 
+                }}
+                className="!border-white !text-white" 
               />
             </Grid>
 
-            {/* Quantity Unit Dropdown */}
+  
             <Grid item xs={12}>
               <TextField
                 fullWidth
@@ -62,6 +149,13 @@ export default function MealForm({ meal, setMeal, isEditing, handleImageChange, 
                 variant="outlined"
                 size="small"
                 helperText="Please select quantity unit"
+                InputLabelProps={{
+                  className: "!text-white",
+                }}
+                InputProps={{
+                  className: "!text-white placeholder-white !border-white",
+                }}
+                className="border-white-100 text-white-100"
               >
                 {QUANTITY_UNITS.map((unit) => (
                   <MenuItem key={unit} value={unit}>
@@ -73,55 +167,52 @@ export default function MealForm({ meal, setMeal, isEditing, handleImageChange, 
           </Grid>
         </Grid>
 
-        {/* Right Side - Image Upload */}
-        <Grid item xs={12} md={6} display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+  
+        <Grid
+          item
+          xs={12}
+          md={6}
+          className="flex flex-col items-center justify-center"
+        >
           <label
             htmlFor="image-upload"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "100%",
-              height: "180px",
-              backgroundColor: "#f9f9f9",
-              border: "2px dashed #ccc",
-              borderRadius: "8px",
-              cursor: "pointer",
-              overflow: "hidden",
-            }}
+            className="flex items-center justify-center w-full h-44 bg-gray-100 border-2 border-dashed border-gray-400 rounded-lg cursor-pointer overflow-hidden"
           >
             {meal.imageUrl ? (
-              <img src={meal.imageUrl} alt="Meal" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <img
+                src={meal.imageUrl}
+                alt="Meal"
+                className="w-full h-full object-cover"
+              />
             ) : (
-              <Typography variant="body2" color="textSecondary">
+              <Typography variant="body2" className="text-gray-500">
                 Click to Add Photo
               </Typography>
             )}
           </label>
-          <input id="image-upload" type="file" accept="image/*" hidden onChange={handleImageChange} />
+          <input
+            id="image-upload"
+            type="file"
+            accept="image/*"
+            hidden
+            onChange={handleImageChange}
+          />
         </Grid>
 
-        {/* Submit Button */}
+
         <Grid item xs={12}>
-        <Button
-  fullWidth
-  variant="contained"
-  onClick={handleSubmit}
-  className="bg-green-800 hover:bg-green-900 text-white font-bold py-2 px-4 rounded focus:ring-0 focus:outline-none active:bg-green-700"
-  disableRipple
-  disableFocusRipple
-  disableElevation
-  sx={{
-    '&:focus': { backgroundColor: '#166534' }, // Dark green on focus
-    '&:active': { backgroundColor: '#14532d' }, // Even darker green on click
-  }}
->
-  {isEditing ? "Update Meal" : "Add Meal"}
-</Button>
-
-
-</Grid>
-
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={handleSubmit}
+            className="bg-[#15423C] hover:bg-green-10000 text-white font-bold !py-2 !px-4 !rounded !focus:ring-0 !focus:outline-none !active:bg-green-700"
+            disableRipple
+            disableFocusRipple
+            disableElevation
+          >
+            {isEditing ? "Update Meal" : "Add Meal"}
+          </Button>
+        </Grid>
       </Grid>
     </Paper>
   );

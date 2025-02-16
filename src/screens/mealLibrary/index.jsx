@@ -1,4 +1,4 @@
-import MealLibraryContainer from "./containers/MealLibraryContainer";
+import MealLibraryContainer from "./containers/MealLibrary";
 
 const MealLibraryPage = () => {
     return <MealLibraryContainer />;

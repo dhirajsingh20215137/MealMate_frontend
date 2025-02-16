@@ -1,2 +1,2 @@
-export { AuthProvider } from "./context/AuthContext";
+export { AuthProvider, AuthContext } from "./context/AuthContext"; 
 export { useAuth } from "./hooks/useAuth";

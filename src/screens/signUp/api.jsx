@@ -1,36 +1,21 @@
+import { HOST } from "../../utils/Constant";
 
-import { useState } from "react";
+export const signup = async (userData) => {
+  try {
+    const response = await fetch(`${HOST}/auth/signup`, {
+      method: "POST",
+      body: JSON.stringify(userData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
 
-
-export const UseSignup = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const signup = async (userData) => {
-    try {
-      setLoading(true);
-      const response = await fetch("http://localhost:8081/auth/signup", {
-        method: "POST",
-        body: JSON.stringify(userData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Signup failed");
-      }
-
-      return data;
-    } catch (error) {
-      setError(error.message || "Something went wrong during signup");
-      throw error;
-    } finally {
-      setLoading(false);
+    if (!response.ok) {
+      throw new Error(data.message || "Signup failed");
     }
-  };
-
-  return { signup, loading, error };
+    return data;
+  } catch (error) {
+    throw new Error(error.message || "Something went wrong during signup");
+  }
 };

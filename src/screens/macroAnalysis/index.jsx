@@ -1,7 +1,7 @@
-import NutritionStatsContainer from "./containers/NutritionStatsContainer";
+import NutritionStats from "./containers/NutritionStats";
 
 const MacroAnalysisPage = () => {
-    return <NutritionStatsContainer />;
+    return <NutritionStats />;
 };
 
 export default MacroAnalysisPage;

@@ -1,34 +1,11 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from '../auth/index';
-import { privateRoutes, publicRoutes } from './routes';
+import { useAuth } from "../auth";
+import Public from "../layouts/public/loadable";
+import Private from "../layouts/private/loadable";
 
-const AppRoutes = () => {
-  const { user, token } = useAuth();
-  const isAuthenticated = user && token;
+const Navigation = () => {
+  const { token } = useAuth();
 
-  return (
-    <Routes> 
-      {isAuthenticated
-        ? privateRoutes.map(({ path, element }) => (
-            <Route key={path} path={path} element={element} />
-          ))
-        : publicRoutes.map(({ path, element }) => (
-            <Route key={path} path={path} element={element} />
-          ))}
-
-      {/* Redirect undefined routes */}
-      <Route
-        path="*"
-        element={
-          isAuthenticated ? (
-            <Navigate to="/profile" replace />
-          ) : (
-            <Navigate to="/signin" replace />
-          )
-        }
-      />
-    </Routes>
-  );
+  return token ? <Private /> : <Public />;
 };
 
-export default AppRoutes;
+export default Navigation;

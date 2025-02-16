@@ -1,17 +1,14 @@
 import { BrowserRouter as Router } from "react-router-dom";
-import { AuthProvider } from "./auth/";         
-import AppRoutes from "./navigation";
-import Navbar from "./shared/components/Navbar";
+import { AuthProvider } from "./auth/";
+import Navigation from "./navigation";
+
 
 const App = () => (
-    <AuthProvider>
-        <Router>
-            <Navbar />
-            <div className="pt-16"> 
-                <AppRoutes />
-            </div>
-        </Router>
-    </AuthProvider>
+  <AuthProvider>
+    <Router>
+      <Navigation />
+    </Router>
+  </AuthProvider>
 );
 
 export default App;
