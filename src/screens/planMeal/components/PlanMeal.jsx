@@ -7,8 +7,16 @@ import {
   TextField,
   Button,
   FormControl,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  IconButton,
+  Typography,
 } from "@mui/material";
-import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const PlanMealComponent = ({
@@ -32,13 +40,12 @@ const PlanMealComponent = ({
       p={4}
       boxShadow={3}
       borderRadius={2}
-      sx={{ backgroundColor: "#6A9C89" }}
+      sx={{ backgroundColor: "#6A9C89", color: "white" }}
     >
-      <Box component="h1" className="text-white text-2xl mb-3 text-center text-bold">
+      <Typography variant="h5" align="center" gutterBottom>
         Plan Your Meal
-      </Box>
+      </Typography>
 
-      {/* Form Section */}
       <Grid container spacing={2} mb={3}>
         <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
@@ -131,21 +138,20 @@ const PlanMealComponent = ({
         Add Meal
       </Button>
 
-      {/* Table Section */}
-      <Box mt={4} overflow="auto">
-        <table className="w-full text-sm text-left text-white border border-gray-300">
-          <thead className="bg-gray-100 text-gray-900 uppercase text-xs">
-            <tr>
-              <th className="px-4 py-2">Food Name</th>
-              <th className="px-4 py-2">Quantity</th>
-              <th className="px-4 py-2">Unit</th>
-              <th className="px-4 py-2">Calories</th>
-              <th className="px-4 py-2">Proteins</th>
-              <th className="px-4 py-2">Carbs</th>
-              <th className="px-4 py-2">Action</th>
-            </tr>
-          </thead>
-          <tbody>
+      <TableContainer component={Paper} sx={{ mt: 4, bgcolor: "#6A9C89" }}>
+        <Table>
+          <TableHead>
+            <TableRow sx={{ backgroundColor: "#E0E0E0" }}>
+              <TableCell>Food Name</TableCell>
+              <TableCell>Quantity</TableCell>
+              <TableCell>Unit</TableCell>
+              <TableCell>Calories</TableCell>
+              <TableCell>Proteins</TableCell>
+              <TableCell>Carbs</TableCell>
+              <TableCell>Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {mealPlans
               .filter(
                 (meal) => meal.mealType.toLowerCase() === mealType.toLowerCase()
@@ -155,37 +161,35 @@ const PlanMealComponent = ({
                   (food) => food.foodId === meal.foodId
                 );
                 return (
-                  <tr key={meal.mealPlannerId} className="border-t text-white">
-                    <td className="px-4 py-2">
+                  <TableRow key={meal.mealPlannerId}>
+                    <TableCell>
                       {meal.foodName || foodDetails?.foodName}
-                    </td>
-                    <td className="px-4 py-2">{meal.quantityValue}</td>
-                    <td className="px-4 py-2">
+                    </TableCell>
+                    <TableCell>{meal.quantityValue}</TableCell>
+                    <TableCell>
                       {meal.quantityUnit || foodDetails?.quantityUnit}
-                    </td>
-                    <td className="px-4 py-2">
+                    </TableCell>
+                    <TableCell>
                       {meal.calories || foodDetails?.calories}
-                    </td>
-                    <td className="px-4 py-2">
+                    </TableCell>
+                    <TableCell>
                       {meal.proteins || foodDetails?.proteins}
-                    </td>
-                    <td className="px-4 py-2">
-                      {meal.carbs || foodDetails?.carbs}
-                    </td>
-                    <td className="px-4 py-2">
+                    </TableCell>
+                    <TableCell>{meal.carbs || foodDetails?.carbs}</TableCell>
+                    <TableCell>
                       <IconButton
                         onClick={() => handleRemoveMeal(meal.mealPlannerId)}
                         sx={{ color: "#16423C" }}
                       >
                         <DeleteIcon />
                       </IconButton>
-                    </td>
-                  </tr>
+                    </TableCell>
+                  </TableRow>
                 );
               })}
-          </tbody>
-        </table>
-      </Box>
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Box>
   );
 };

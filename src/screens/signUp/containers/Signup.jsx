@@ -6,7 +6,6 @@ import { Snackbar, Alert } from "@mui/material";
 import { Navigate } from "react-router-dom";
 import "../../../index.css";
 
-
 class SignupContainer extends Component {
   constructor(props) {
     super(props);
@@ -82,8 +81,8 @@ class SignupContainer extends Component {
       });
 
       if (data && data.token) {
-        Cookies.set("token", data.token, { expires: 30 });
-        sessionStorage.setItem("email", email);
+        // Cookies.set("token", data.token, { expires: 30 });
+        // sessionStorage.setItem("email", email);
 
         this.showSnackbar(
           "Signup Successful! Redirecting to login...",
@@ -122,7 +121,7 @@ class SignupContainer extends Component {
       <>
         <Snackbar
           open={snackbar.open}
-          autoHideDuration={1000}
+          autoHideDuration={3000}
           onClose={this.handleCloseSnackbar}
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
         >

@@ -1,7 +1,3 @@
 import LoginContainer from "./containers/Login";   
+export default LoginContainer;
 
-const LoginPage = () => {
-    return <LoginContainer />;
-};
-
-export default LoginPage;

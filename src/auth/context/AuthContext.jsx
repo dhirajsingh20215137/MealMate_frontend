@@ -32,6 +32,7 @@ export const AuthProvider = ({ children }) => {
         Cookies.set("user", JSON.stringify(userData), { expires: 7 });
         setToken(authToken);
         setUser(userData);
+        console.log(user)
     };
 
     const logout = () => {

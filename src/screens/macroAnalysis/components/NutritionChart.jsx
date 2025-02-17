@@ -18,9 +18,22 @@ import {
   Legend,
 } from "chart.js";
 
-ChartJS.register(BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
+ChartJS.register(
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend
+);
 
-const NutritionChart = ({ selectedType, setSelectedType, stats, loading, error }) => {
+const NutritionChart = ({
+  selectedType,
+  setSelectedType,
+  stats,
+  loading,
+  error,
+}) => {
   const chartData = stats
     ? {
         labels: ["Daily", "Weekly", "Monthly"],
@@ -33,7 +46,11 @@ const NutritionChart = ({ selectedType, setSelectedType, stats, loading, error }
           },
           {
             label: "Achieved",
-            data: [stats.dailyAchieved, stats.weeklyAchieved, stats.monthlyAchieved],
+            data: [
+              stats.dailyAchieved,
+              stats.weeklyAchieved,
+              stats.monthlyAchieved,
+            ],
             backgroundColor: "White",
             borderRadius: 4,
           },
@@ -93,32 +110,29 @@ const NutritionChart = ({ selectedType, setSelectedType, stats, loading, error }
           Nutrition Analysis
         </Typography>
 
-        {/* Button Group for Nutrient Selection */}
-        <ButtonGroup fullWidth sx={{ mb: 3 }}>
-  {["carbs", "calories", "proteins"].map((type) => (
-    <Button
-      key={type}
-      onClick={() => setSelectedType(type)}
-      sx={{
-        backgroundColor: "#fff", // Default white background
-        color: "#000", // Default black text
-        border: "1px solid #15423C",
-        fontWeight: "bold",
-        "&:hover": {
-          backgroundColor: "#15423C", // Background on hover
-          color: "#fff", // Text color on hover
-        },
-      }}
-    >
-      {type.charAt(0).toUpperCase() + type.slice(1)}
-    </Button>
-  ))}
-</ButtonGroup>
+        <ButtonGroup fullWidth className="mb-3">
+          {["carbs", "calories", "proteins"].map((type) => (
+            <Button
+              key={type}
+              onClick={() => setSelectedType(type)}
+              className={`border border-[#15423C] font-bold px-4 py-2 transition-colors duration-300 ${
+                selectedType === type
+                  ? "bg-[#15423C] text-white"
+                  : "bg-white text-black hover:bg-[#15423C] hover:text-white"
+              }`}
+            >
+              {type.charAt(0).toUpperCase() + type.slice(1)}
+            </Button>
+          ))}
+        </ButtonGroup>
 
-
-        {/* Loading & Error Handling */}
         {loading ? (
-          <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="200px"
+          >
             <CircularProgress sx={{ color: "#fff" }} />
           </Box>
         ) : error ? (

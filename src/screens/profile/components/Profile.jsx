@@ -36,7 +36,7 @@ const ProfileComponent = ({
       minHeight: "100vh",
     }}
   >
-    <Typography variant="h4" fontWeight="bold" mb={2}>
+    <Typography variant="h5" fontWeight="bold" mb={2} className="text-white bg-[#6A9C89] p-2 rounded-lg"> 
       User Profile
     </Typography>
 

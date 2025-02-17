@@ -1,7 +1,3 @@
 import ProfileContainer from "./containers/Profile";
+export default ProfileContainer;
 
-const ProfilePage = () => {
-    return <ProfileContainer />;
-};
-
-export default ProfilePage;

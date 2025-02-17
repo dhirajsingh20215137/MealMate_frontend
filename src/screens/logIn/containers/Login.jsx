@@ -42,6 +42,8 @@ class LoginContainer extends Component {
             const data = await loginUser(this.state.formData);
             login(data.token, data.user);
 
+            console.log(data.user)
+
             this.setState({
                 snackbar: {
                     message: "Login Successful!",

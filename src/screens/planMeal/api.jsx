@@ -2,7 +2,7 @@ import axios from "axios";
 
 const HOST = "http://localhost:8081/";
 
-export const fetchUserFoods = async (userId, token) => {  //url,withcredentials,body
+export const fetchUserFoods = async (userId, token) => {
   const response = await axios.get(`${HOST}user/${userId}/foods`, {
     headers: { Authorization: `Bearer ${token}` },
     withCredentials: true,

@@ -132,10 +132,9 @@ const ProfileContainer = () => {
         passwordLoading={passwordLoading}
       />
 
-      {/* Snackbar for notifications */}
       <Snackbar
         open={snackbarOpen}
-        autoHideDuration={500}
+        autoHideDuration={3000}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
         onClose={() => setSnackbarOpen(false)}
       >

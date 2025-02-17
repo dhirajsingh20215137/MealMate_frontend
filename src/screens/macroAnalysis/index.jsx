@@ -1,7 +1,2 @@
 import NutritionStats from "./containers/NutritionStats";
-
-const MacroAnalysisPage = () => {
-    return <NutritionStats />;
-};
-
-export default MacroAnalysisPage;
+export default NutritionStats

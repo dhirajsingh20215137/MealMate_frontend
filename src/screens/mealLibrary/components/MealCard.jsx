@@ -24,10 +24,10 @@ export default function MealCard({ meal, onEdit, onDelete }) {
       )}
     
       <Grid item className="flex-1">
-        <Typography variant="h6" className="text-white mt-2 font-semibold">
+        <Typography variant="h6" className="text-green-1000 mt-2 font-semibold">
           {meal.foodName}
         </Typography>
-        <Typography>Calories: {meal.calories}</Typography>
+        <Typography>Calories: {meal.calories}kcl</Typography>
         <Typography>Proteins: {meal.proteins}g</Typography>
         <Typography>Carbs: {meal.carbs}g</Typography>
       </Grid>

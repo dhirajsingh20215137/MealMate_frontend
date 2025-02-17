@@ -33,10 +33,9 @@ const SignupForm = ({
       alignItems="center"
       minHeight="80vh"
       padding={4}
-     
     >
-<Card className="p-10 rounded-xl shadow-lg w-[40vw]  bg-[#6A9C89] text-center text-white max-h-[90vh] ">
-<img
+      <Card className="p-10 rounded-xl shadow-lg w-[40vw]  bg-[#6A9C89] text-center text-white max-h-[90vh] ">
+        <img
           src="/MealMate.png"
           alt="MealMate Logo"
           className="w-24 mx-auto mb-4 bg-[#144442] p-2 rounded-full"
@@ -62,7 +61,6 @@ const SignupForm = ({
                 required
                 fullWidth
                 variant="outlined"
-
                 InputLabelProps={{
                   className: "!text-white",
                 }}
@@ -113,7 +111,8 @@ const SignupForm = ({
                 InputProps={{
                   className: "!text-white placeholder-white !border-white",
                 }}
-                className="border-white-100 text-white-100"              />
+                className="border-white-100 text-white-100"
+              />
             </Grid>
 
             <Grid item xs={12} sm={6}>
@@ -121,7 +120,7 @@ const SignupForm = ({
                 select
                 label="Gender"
                 name="gender"
-                value={gender || ""} 
+                value={gender || ""}
                 onChange={handleChange}
                 fullWidth
                 variant="outlined"
@@ -131,7 +130,8 @@ const SignupForm = ({
                 InputProps={{
                   className: "!text-white placeholder-white !border-white",
                 }}
-                className="border-white-100 text-white-100"              >
+                className="border-white-100 text-white-100"
+              >
                 <MenuItem value="MALE">Male</MenuItem>
                 <MenuItem value="FEMALE">Female</MenuItem>
                 <MenuItem value="OTHER">Other</MenuItem>
@@ -154,7 +154,8 @@ const SignupForm = ({
                 InputProps={{
                   className: "!text-white placeholder-white !border-white",
                 }}
-                className="border-white-100 text-white-100"              />
+                className="border-white-100 text-white-100"
+              />
             </Grid>
 
             <Grid item xs={12} sm={6}>
@@ -173,7 +174,8 @@ const SignupForm = ({
                 InputProps={{
                   className: "!text-white placeholder-white !border-white",
                 }}
-                className="border-white-100 text-white-100"              />
+                className="border-white-100 text-white-100"
+              />
             </Grid>
 
             <Grid item xs={12} sm={6}>
@@ -192,7 +194,8 @@ const SignupForm = ({
                 InputProps={{
                   className: "!text-white placeholder-white !border-white",
                 }}
-                className="border-white-100 text-white-100"              />
+                className="border-white-100 text-white-100"
+              />
             </Grid>
 
             <Grid item xs={12} sm={6}>
@@ -211,7 +214,8 @@ const SignupForm = ({
                 InputProps={{
                   className: "!text-white placeholder-white !border-white",
                 }}
-                className="border-white-100 text-white-100"              />
+                className="border-white-100 text-white-100"
+              />
             </Grid>
 
             <Grid item xs={12} sm={6}>
@@ -230,7 +234,8 @@ const SignupForm = ({
                 InputProps={{
                   className: "!text-white placeholder-white !border-white",
                 }}
-                className="border-white-100 text-white-100"              />
+                className="border-white-100 text-white-100"
+              />
             </Grid>
 
             <Grid item xs={12}>
