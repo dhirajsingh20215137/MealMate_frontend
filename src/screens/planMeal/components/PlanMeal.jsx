@@ -1,21 +1,21 @@
 import React from "react";
 import {
   Box,
+  Typography,
   Grid,
+  FormControl,
   Select,
   MenuItem,
   TextField,
   Button,
-  FormControl,
   Table,
-  TableBody,
-  TableCell,
-  TableContainer,
   TableHead,
+  TableBody,
   TableRow,
-  Paper,
+  TableCell,
   IconButton,
-  Typography,
+  Paper,
+  TableContainer,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -31,6 +31,8 @@ const PlanMealComponent = ({
   handleAddMeal,
   handleRemoveMeal,
   mealTypes,
+  filteredMeals,
+  totalNutrition,
 }) => {
   return (
     <Box
@@ -42,10 +44,9 @@ const PlanMealComponent = ({
       borderRadius={2}
       sx={{ backgroundColor: "#6A9C89", color: "white" }}
     >
-      <Typography variant="h5" align="center" gutterBottom>
+      <Typography variant="h4" align="center" fontWeight="bold" mb={3}>
         Plan Your Meal
       </Typography>
-
       <Grid container spacing={2} mb={3}>
         <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
@@ -141,52 +142,65 @@ const PlanMealComponent = ({
       <TableContainer component={Paper} sx={{ mt: 4, bgcolor: "#6A9C89" }}>
         <Table>
           <TableHead>
-            <TableRow sx={{ backgroundColor: "#E0E0E0" }}>
-              <TableCell>Food Name</TableCell>
-              <TableCell>Quantity</TableCell>
-              <TableCell>Unit</TableCell>
-              <TableCell>Calories</TableCell>
-              <TableCell>Proteins</TableCell>
-              <TableCell>Carbs</TableCell>
-              <TableCell>Action</TableCell>
+            <TableRow className="bg-gray-200">
+              <TableCell className="font-bold">Food Name</TableCell>
+              <TableCell className="font-bold">Quantity</TableCell>
+              <TableCell className="font-bold">Unit</TableCell>
+              <TableCell className="font-bold">Calories</TableCell>
+              <TableCell className="font-bold">Proteins</TableCell>
+              <TableCell className="font-bold">Carbs</TableCell>
+              <TableCell className="font-bold">Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {mealPlans
-              .filter(
-                (meal) => meal.mealType.toLowerCase() === mealType.toLowerCase()
-              )
-              .map((meal) => {
-                const foodDetails = userFoods.find(
-                  (food) => food.foodId === meal.foodId
-                );
-                return (
-                  <TableRow key={meal.mealPlannerId}>
-                    <TableCell>
-                      {meal.foodName || foodDetails?.foodName}
-                    </TableCell>
-                    <TableCell>{meal.quantityValue}</TableCell>
-                    <TableCell>
-                      {meal.quantityUnit || foodDetails?.quantityUnit}
-                    </TableCell>
-                    <TableCell>
-                      {meal.calories || foodDetails?.calories}
-                    </TableCell>
-                    <TableCell>
-                      {meal.proteins || foodDetails?.proteins}
-                    </TableCell>
-                    <TableCell>{meal.carbs || foodDetails?.carbs}</TableCell>
-                    <TableCell>
-                      <IconButton
-                        onClick={() => handleRemoveMeal(meal.mealPlannerId)}
-                        sx={{ color: "#16423C" }}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+            {filteredMeals.map((meal) => {
+              const foodDetails = userFoods.find(
+                (food) => food.foodId === meal.foodId
+              );
+              return (
+                <TableRow key={meal.mealPlannerId}>
+                  <TableCell>
+                    {meal.foodName || foodDetails?.foodName}
+                  </TableCell>
+                  <TableCell>{meal.quantityValue}</TableCell>
+                  <TableCell>
+                    {meal.quantityUnit || foodDetails?.quantityUnit}
+                  </TableCell>
+                  <TableCell>
+                    {meal.calories || foodDetails?.calories}
+                  </TableCell>
+                  <TableCell>
+                    {meal.proteins || foodDetails?.proteins}
+                  </TableCell>
+                  <TableCell>{meal.carbs || foodDetails?.carbs}</TableCell>
+                  <TableCell>
+                    <IconButton
+                      onClick={() => handleRemoveMeal(meal.mealPlannerId)}
+                      sx={{ color: "#16423C" }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+            {filteredMeals.length > 0 && (
+              <TableRow className="bg-gray-200">
+                <TableCell colSpan={3} className="font-bold">
+                  Total
+                </TableCell>
+                <TableCell className="font-bold">
+                  {totalNutrition.totalCalories.toFixed(2)}
+                </TableCell>
+                <TableCell className="font-bold">
+                  {totalNutrition.totalProteins.toFixed(2)}
+                </TableCell>
+                <TableCell className="font-bold">
+                  {totalNutrition.totalCarbs.toFixed(2)}
+                </TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

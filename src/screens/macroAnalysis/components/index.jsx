@@ -1,2 +1,2 @@
-import NutritionChart from "./NutritionChart";
+import NutritionChart from "./MacroAnalysis";
 export default NutritionChart;

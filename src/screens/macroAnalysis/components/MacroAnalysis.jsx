@@ -107,7 +107,7 @@ const NutritionChart = ({
         }}
       >
         <Typography variant="h4" align="center" fontWeight="bold" mb={3}>
-          Nutrition Analysis
+          Macro Analysis
         </Typography>
 
         <ButtonGroup fullWidth className="mb-3">

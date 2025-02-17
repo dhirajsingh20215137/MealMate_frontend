@@ -1,2 +1,2 @@
-import NutritionStats from "./containers/NutritionStats";
+import NutritionStats from "./containers/MacroAnalysis";
 export default NutritionStats

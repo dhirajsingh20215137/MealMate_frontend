@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import ProfileComponent from "../components/Profile";
 import { CircularProgress, Snackbar, Alert } from "@mui/material";
 import { useProfileApi } from "../api";
+import { useAuth } from "../../../auth";
 
 const ProfileContainer = () => {
   const { getProfile, updateProfile, uploadPhoto } = useProfileApi();
+  const { user } = useAuth();
   const [profile, setProfile] = useState({
     gender: null,
     weight: "",
@@ -30,7 +32,6 @@ const ProfileContainer = () => {
   const fetchData = async () => {
     try {
       const data = await getProfile();
-
       setProfile(data);
     } catch {
       setNotification({ message: "Failed to load profile.", type: "error" });

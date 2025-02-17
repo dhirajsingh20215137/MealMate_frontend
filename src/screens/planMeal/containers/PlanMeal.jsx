@@ -41,6 +41,34 @@ const PlanMealContainer = () => {
     );
   };
 
+  // Filter meals based on selected mealType
+  const filteredMeals = mealPlans.filter(
+    (meal) => meal.mealType.toLowerCase() === mealType.toLowerCase()
+  );
+
+  // Calculate the total values for calories, proteins, and carbs
+  const calculateTotal = (meal) => {
+    const foodDetails = userFoods.find((food) => food.foodId === meal.foodId);
+    const quantityValue = meal.quantityValue || 1;
+
+    return {
+      totalCalories: (foodDetails?.calories || 0) * quantityValue,
+      totalProteins: (foodDetails?.proteins || 0) * quantityValue,
+      totalCarbs: (foodDetails?.carbs || 0) * quantityValue,
+    };
+  };
+
+  const totalNutrition = filteredMeals.reduce(
+    (totals, meal) => {
+      const { totalCalories, totalProteins, totalCarbs } = calculateTotal(meal);
+      totals.totalCalories += totalCalories;
+      totals.totalProteins += totalProteins;
+      totals.totalCarbs += totalCarbs;
+      return totals;
+    },
+    { totalCalories: 0, totalProteins: 0, totalCarbs: 0 }
+  );
+
   return (
     <PlanMealComponent
       mealPlans={mealPlans}
@@ -54,6 +82,9 @@ const PlanMealContainer = () => {
       handleAddMeal={handleAddMeal}
       handleRemoveMeal={handleRemoveMeal}
       mealTypes={mealTypes}
+      calculateTotal={calculateTotal}
+      filteredMeals={filteredMeals}
+      totalNutrition={totalNutrition}
     />
   );
 };

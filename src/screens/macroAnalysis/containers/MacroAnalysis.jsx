@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../../auth/index";
 import { getNutritionStats } from "../api";
-import NutritionChart from "../components/NutritionChart";
+import NutritionChart from "../components/MacroAnalysis";
 
 const NutritionStats = () => {
   const { user, token } = useAuth();
