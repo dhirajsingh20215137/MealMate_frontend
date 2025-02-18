@@ -13,7 +13,7 @@ const ProfileContainer = () => {
     height: "",
     targetedCarbs: "",
     targetedProtein: "",
-    targetedCalories: "",
+    targetedFats: "",
     userUrl: "",
   });
 

@@ -12,7 +12,7 @@ const Private = () => {
             <Route key={path} path={path} element={<Component />} />
           ))}
          
-          <Route path="*" element={<Navigate to="/profile" />} />
+          <Route path="*" element={<Navigate to="/plan-meal" />} />
         </Routes>
       </div>
     </>

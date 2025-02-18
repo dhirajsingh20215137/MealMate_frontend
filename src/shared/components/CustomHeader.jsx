@@ -35,7 +35,7 @@ const CustomHeader = () => {
       <AppBar position="fixed" sx={{ backgroundColor: "#16423C", boxShadow: 1 }}>
         <Toolbar>
           <Grid container alignItems="center" justifyContent="space-between">
-            {/* Left Side: Logo & Navigation */}
+          
             <Grid item sx={{ display: "flex", alignItems: "center", gap: 2 }}>
               <Link to="/profile">
                 <Box
@@ -49,7 +49,6 @@ const CustomHeader = () => {
                 MealMate
               </Typography>
 
-              {/* Desktop Navigation */}
               <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
                 {user &&
                   navLinks.map(({ path, label }) => (
@@ -60,7 +59,6 @@ const CustomHeader = () => {
               </Box>
             </Grid>
 
-            {/* Right Side: Logout or Authentication */}
             <Grid item sx={{ display: { xs: "none", md: "flex" } }}>
               {user ? (
                 <Button sx={{ backgroundColor: "white", color: "black", "&:hover": { backgroundColor: "#6A9C89", color: "white" } }} onClick={logout}>
@@ -75,7 +73,7 @@ const CustomHeader = () => {
               )}
             </Grid>
 
-            {/* Mobile Menu Button */}
+         
             <Grid item sx={{ display: { xs: "block", md: "none" } }}>
               <IconButton sx={{ color: "white" }} onClick={() => setOpen(true)}>
                 <MenuIcon fontSize="large" />
@@ -85,7 +83,7 @@ const CustomHeader = () => {
         </Toolbar>
       </AppBar>
 
-      {/* Sidebar for Mobile */}
+     
       <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
         <Box sx={{ width: 250, height: "100%", backgroundColor: "#16423C", color: "white", padding: 2 }}>
           <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
@@ -94,14 +92,14 @@ const CustomHeader = () => {
             </IconButton>
           </Box>
 
-          {/* Mobile Navigation */}
+      
           {navLinks.map(({ path, label }) => (
             <Button key={path} fullWidth component={Link} to={path} sx={{ color: "white", marginY: 1, "&:hover": { backgroundColor: "#6A9C89" } }} onClick={() => setOpen(false)}>
               {label}
             </Button>
           ))}
 
-          {/* Mobile Logout */}
+        
           {user && (
             <Button fullWidth sx={{ backgroundColor: "white", color: "black", marginTop: 2, "&:hover": { backgroundColor: "#6A9C89", color: "white" } }} onClick={logout}>
               Logout

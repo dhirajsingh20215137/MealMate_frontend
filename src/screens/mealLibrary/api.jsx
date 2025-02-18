@@ -19,7 +19,7 @@ export const addMeal = async (userId, token, meal, file) => {
   const formData = new FormData();
   const foodDTO = {
     foodName: meal.foodName,
-    calories: parseFloat(meal.calories),
+    fats: parseFloat(meal.fats),
     proteins: parseFloat(meal.proteins),
     carbs: parseFloat(meal.carbs),
     quantityUnit: meal.quantityUnit.toUpperCase(),
@@ -39,7 +39,7 @@ export const addMeal = async (userId, token, meal, file) => {
 export const updateMeal = async (userId, token, mealId, meal) => {
   const updatedMeal = {
     foodName: meal.foodName,
-    calories: parseFloat(meal.calories),
+    fats: parseFloat(meal.fats),
     proteins: parseFloat(meal.proteins),
     carbs: parseFloat(meal.carbs),
     quantityUnit: meal.quantityUnit.toUpperCase(),

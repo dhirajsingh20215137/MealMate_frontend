@@ -19,7 +19,7 @@ const SignupForm = ({
   height,
   targetedCarbs,
   targetedProtein,
-  targetedCalories,
+  targetedFats,
   handleChange,
   handleSubmit,
   passwordError,
@@ -33,8 +33,10 @@ const SignupForm = ({
       alignItems="center"
       minHeight="80vh"
       padding={4}
+      overflow={"hidden"}
     >
-      <Card className="p-10 rounded-xl shadow-lg w-[40vw]  bg-[#6A9C89] text-center text-white max-h-[90vh] ">
+      <Card className="p-10 rounded-xl shadow-lg w-[40vw]  bg-[#6A9C89] text-center text-white max-h-[90vh] "
+      overflow={"hidden"}>
         <img
           src="/MealMate.png"
           alt="MealMate Logo"
@@ -44,7 +46,7 @@ const SignupForm = ({
         <Typography variant="h5" className="text-black-300 mb-4">
           Welcome to MealMate
         </Typography>
-        <Typography variant="h6" className="text-white ">
+        <Typography variant="h6" className="text-white mb-2">
           Create an Account
         </Typography>
 
@@ -220,11 +222,11 @@ const SignupForm = ({
 
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Targeted Calories"
+                label="Targeted Fats (g)"
                 type="number"
-                name="targetedCalories"
-                value={targetedCalories}
-                placeholder="Targeted Calories"
+                name="targetedFats"
+                value={targetedFats}
+                placeholder="Targeted Fats"
                 onChange={handleChange}
                 fullWidth
                 variant="outlined"
@@ -282,7 +284,7 @@ SignupForm.propTypes = {
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   targetedCarbs: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   targetedProtein: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  targetedCalories: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  targetedFats: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   passwordError: PropTypes.string,

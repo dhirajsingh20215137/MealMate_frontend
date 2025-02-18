@@ -20,11 +20,11 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const PlanMealComponent = ({
-  mealPlans,
+  mealPlans, 
   mealType,
   selectedFoodId,
   quantity,
-  userFoods,
+  userFoods, 
   setMealType,
   setSelectedFoodId,
   setQuantity,
@@ -47,6 +47,8 @@ const PlanMealComponent = ({
       <Typography variant="h4" align="center" fontWeight="bold" mb={3}>
         Plan Your Meal
       </Typography>
+
+      {/* Form Section */}
       <Grid container spacing={2} mb={3}>
         <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
@@ -126,6 +128,7 @@ const PlanMealComponent = ({
         </Grid>
       </Grid>
 
+     
       <Button
         variant="contained"
         onClick={handleAddMeal}
@@ -139,40 +142,29 @@ const PlanMealComponent = ({
         Add Meal
       </Button>
 
-      <TableContainer component={Paper} sx={{ mt: 4, bgcolor: "#6A9C89" }}>
-        <Table>
-          <TableHead>
-            <TableRow className="bg-gray-200">
-              <TableCell className="font-bold">Food Name</TableCell>
-              <TableCell className="font-bold">Quantity</TableCell>
-              <TableCell className="font-bold">Unit</TableCell>
-              <TableCell className="font-bold">Calories</TableCell>
-              <TableCell className="font-bold">Proteins</TableCell>
-              <TableCell className="font-bold">Carbs</TableCell>
-              <TableCell className="font-bold">Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredMeals.map((meal) => {
-              const foodDetails = userFoods.find(
-                (food) => food.foodId === meal.foodId
-              );
-              return (
+      {filteredMeals.length > 0 && (
+        <TableContainer component={Paper} sx={{ mt: 4, bgcolor: "#6A9C89" }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell className="font-bold">Food Name</TableCell>
+                <TableCell className="font-bold">Quantity</TableCell>
+                <TableCell className="font-bold">Unit</TableCell>
+                <TableCell className="font-bold">Fats</TableCell>
+                <TableCell className="font-bold">Proteins</TableCell>
+                <TableCell className="font-bold">Carbs</TableCell>
+                <TableCell className="font-bold">Action</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredMeals.map((meal) => (
                 <TableRow key={meal.mealPlannerId}>
-                  <TableCell>
-                    {meal.foodName || foodDetails?.foodName}
-                  </TableCell>
+                  <TableCell>{meal.foodName}</TableCell>
                   <TableCell>{meal.quantityValue}</TableCell>
-                  <TableCell>
-                    {meal.quantityUnit || foodDetails?.quantityUnit}
-                  </TableCell>
-                  <TableCell>
-                    {meal.calories || foodDetails?.calories}
-                  </TableCell>
-                  <TableCell>
-                    {meal.proteins || foodDetails?.proteins}
-                  </TableCell>
-                  <TableCell>{meal.carbs || foodDetails?.carbs}</TableCell>
+                  <TableCell>{meal.quantityUnit}</TableCell>
+                  <TableCell>{meal.fats*meal.quantityValue}</TableCell>
+                  <TableCell>{meal.proteins*meal.quantityValue}</TableCell>
+                  <TableCell>{meal.carbs*meal.quantityValue}</TableCell>
                   <TableCell>
                     <IconButton
                       onClick={() => handleRemoveMeal(meal.mealPlannerId)}
@@ -182,15 +174,13 @@ const PlanMealComponent = ({
                     </IconButton>
                   </TableCell>
                 </TableRow>
-              );
-            })}
-            {filteredMeals.length > 0 && (
+              ))}
               <TableRow className="bg-gray-200">
                 <TableCell colSpan={3} className="font-bold">
                   Total
                 </TableCell>
                 <TableCell className="font-bold">
-                  {totalNutrition.totalCalories.toFixed(2)}
+                  {totalNutrition.totalFats.toFixed(2)}
                 </TableCell>
                 <TableCell className="font-bold">
                   {totalNutrition.totalProteins.toFixed(2)}
@@ -200,10 +190,10 @@ const PlanMealComponent = ({
                 </TableCell>
                 <TableCell></TableCell>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
     </Box>
   );
 };

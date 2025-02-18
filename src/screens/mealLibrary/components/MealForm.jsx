@@ -64,9 +64,9 @@ export default function MealForm({
               <TextField
                 fullWidth
                 type="number"
-                name="calories"
-                label="Calories(kcl)"
-                value={meal.calories || ""}
+                name="fats"
+                label="Fats(g)"
+                value={meal.fats || ""}
                 onChange={handleChange}
                 variant="outlined"
                 size="small"
@@ -167,8 +167,6 @@ export default function MealForm({
             </Grid>
           </Grid>
         </Grid>
-
-  
         <Grid
           item
           xs={12}
@@ -199,8 +197,6 @@ export default function MealForm({
             onChange={handleImageChange}
           />
         </Grid>
-
-
         <Grid item xs={12}>
           <Button
             fullWidth

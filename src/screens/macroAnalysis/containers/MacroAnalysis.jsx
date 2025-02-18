@@ -19,7 +19,6 @@ const NutritionStats = () => {
       const response = await getNutritionStats(user.userId, type, token);
       setStats(response.data);
     } catch (error) {
-      console.error("Error fetching stats:", error);
       setError("Failed to load stats. Please try again.");
     } finally {
       setLoading(false);

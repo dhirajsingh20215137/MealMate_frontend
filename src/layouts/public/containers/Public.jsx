@@ -9,7 +9,7 @@ const PublicContainer = () => {
 
   useEffect(() => {
     if (token) {
-      navigateTo("/profile"); 
+      navigateTo("/plan-meal"); 
     }
   }, [token, navigateTo]); 
 

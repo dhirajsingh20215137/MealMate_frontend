@@ -111,7 +111,7 @@ const NutritionChart = ({
         </Typography>
 
         <ButtonGroup fullWidth className="mb-3">
-          {["carbs", "calories", "proteins"].map((type) => (
+          {["carbs", "fats", "proteins"].map((type) => (
             <Button
               key={type}
               onClick={() => setSelectedType(type)}

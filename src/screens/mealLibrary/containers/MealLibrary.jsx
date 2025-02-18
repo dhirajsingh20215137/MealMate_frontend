@@ -15,11 +15,12 @@ export default function MealLibraryContainer() {
     severity: "",
   });
 
+
   const isAdmin = user?.userType === "ADMIN";
 
   const [meal, setMeal] = useState({
     foodName: "",
-    calories: "",
+    fats: "",
     proteins: "",
     carbs: "",
     quantityUnit: "",
@@ -29,10 +30,6 @@ export default function MealLibraryContainer() {
 
   const [isEditing, setIsEditing] = useState(false);
   const [editingFoodId, setEditingFoodId] = useState(null);
-
-  // useEffect(() => {
-   
-  // }, [meals]);
 
   useEffect(() => {
     fetchMealsData();
@@ -45,8 +42,6 @@ export default function MealLibraryContainer() {
     } catch {
       setError("Failed to fetch meals.");
     }
-
-  
   };
 
   const handleChange = (e) => {
@@ -90,7 +85,7 @@ export default function MealLibraryContainer() {
 
     setMeal({
       foodName: "",
-      calories: "",
+      fats: "",
       proteins: "",
       carbs: "",
       quantityUnit: "",
@@ -146,7 +141,7 @@ export default function MealLibraryContainer() {
     <Box sx={{ mt: 10, px: { xs: 2, md: 5 }, pb: 5 }}>
       <Snackbar
         open={!!error}
-        autoHideDuration={500}
+        autoHideDuration={3000}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
         onClose={() => setError("")}
       >
@@ -156,7 +151,8 @@ export default function MealLibraryContainer() {
       </Snackbar>
       <Snackbar
         open={!!alertMessage.message}
-        autoHideDuration={500}
+        autoHideDuration={3000}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
         onClose={() => setAlertMessage({ message: "", severity: "" })}
       >
         <Alert severity={alertMessage.severity} sx={{ width: "100%" }}>
@@ -174,22 +170,23 @@ export default function MealLibraryContainer() {
               meal={meal}
               setMeal={setMeal}
               isEditing={isEditing}
+              handleChange={handleChange}
               handleImageChange={handleImageChange}
               handleSubmit={handleSubmit}
               user={user}
+            
             />
           </Paper>
         </Grid>
       </Grid>
       <Box sx={{ mt: 5, textAlign: "center" }}>
-      <Typography
-  variant="h5"
-  fontWeight="bold"
-  className="bg-[#6A9C89] text-white px-5 py-2 rounded-lg text-center inline-block cursor-pointer transition duration-300 hover:bg-[#0F312A]"
->
-  Your Meals
-</Typography>
-
+        <Typography
+          variant="h5"
+          fontWeight="bold"
+          className="bg-[#6A9C89] text-white px-5 py-2 rounded-lg text-center inline-block cursor-pointer transition duration-300 hover:bg-[#0F312A]"
+        >
+          Your Meals
+        </Typography>
       </Box>
       <Grid container spacing={2} sx={{ mt: 3 }}>
         {meals.map((item, index) => (
@@ -203,6 +200,7 @@ export default function MealLibraryContainer() {
           >
             <MealCard
               meal={item}
+              userType={user.userType}
               onEdit={handleEdit}
               onDelete={() => handleDelete(item.foodId, item.foodType)}
             />

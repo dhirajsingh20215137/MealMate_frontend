@@ -81,9 +81,6 @@ class SignupContainer extends Component {
       });
 
       if (data && data.token) {
-        // Cookies.set("token", data.token, { expires: 30 });
-        // sessionStorage.setItem("email", email);
-
         this.showSnackbar(
           "Signup Successful! Redirecting to login...",
           "success"

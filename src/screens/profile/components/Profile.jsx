@@ -223,7 +223,6 @@ const ProfileComponent = ({
                 </Select>
               </FormControl>
 
-              {/* Weight, Height, and Targeted Nutrition Fields */}
               <TextField
                 label="Weight(kg)"
                 name="weight"
@@ -281,12 +280,12 @@ const ProfileComponent = ({
               />
 
               <TextField
-                label="Targeted Calories(g)"
-                name="targetedCalories"
+                label="Targeted Fats(g)"
+                name="targetedFats"
                 type="number"
-                value={profile.targetedCalories || ""}
+                value={profile.targetedFats || ""}
                 onChange={(e) =>
-                  setProfile({ ...profile, targetedCalories: e.target.value })
+                  setProfile({ ...profile, targetedFats: e.target.value })
                 }
                 fullWidth
                 className="text-white border border-white rounded"
@@ -294,7 +293,6 @@ const ProfileComponent = ({
                 InputProps={{ className: "text-white" }}
               />
 
-              {/* Update Profile Button */}
               <Button
                 type="submit"
                 fullWidth

@@ -1,6 +1,7 @@
 import axios from "axios";
+import { HOST } from "../../utils/Constant";
 
 export const getNutritionStats = (userId, type, token) =>
-  axios.get(`http://localhost:8081/user/${userId}/stats/${type}`, {
+  axios.get(`${HOST}/user/${userId}/stats/${type}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
