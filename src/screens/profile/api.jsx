@@ -1,25 +1,19 @@
-import axios from "axios";
+import { apiRequest } from "../../utils/Api";
 import { useAuth } from "../../auth/index";
-import { HOST } from "../../utils/Constant";
 
 export const useProfileApi = () => {
-  const { token, user } = useAuth();
+  const { user } = useAuth();
   const userId = user?.userId;
 
   const getProfile = async () => {
-    const response = await axios.get(`${HOST}/user/${userId}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    return response.data;
+    return await apiRequest({ url: `/user/${userId}`, method: "GET" });
   };
 
   const updateProfile = async (profileData) => {
-    return await axios.post(`${HOST}/user/${userId}`, profileData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
+    return await apiRequest({
+      url: `/user/${userId}`,
+      method: "POST",
+      data: profileData,
     });
   };
 
@@ -27,14 +21,12 @@ export const useProfileApi = () => {
     const formData = new FormData();
     formData.append("profilePhoto", file);
 
-    const response = await axios.post(
-      `${HOST}/user/${userId}/photo/upload-photo`,
-      formData,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    return response.data;
+    return await apiRequest({
+      url: `/user/${userId}/photo/upload-photo`,
+      method: "POST",
+      data: formData,
+      headers: { "Content-Type": "multipart/form-data" },
+    });
   };
 
   return { getProfile, updateProfile, uploadPhoto };

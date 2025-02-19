@@ -84,7 +84,7 @@ const CustomHeader = () => {
       </AppBar>
 
      
-      <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
+      <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
         <Box sx={{ width: 250, height: "100%", backgroundColor: "#16423C", color: "white", padding: 2 }}>
           <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
             <IconButton onClick={() => setOpen(false)} sx={{ color: "white" }}>

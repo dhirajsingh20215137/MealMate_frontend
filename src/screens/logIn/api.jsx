@@ -1,25 +1,12 @@
+import { apiRequest } from "../../utils/Api";
+
 export const loginUser = async (credentials) => {
-    try {
-        const response = await fetch('http://localhost:8081/auth/login', {
-            method: 'POST',
-            body: JSON.stringify({
-                email: credentials.email,
-                password: credentials.password,
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.message || 'Login failed');
-        }
-
-        return data;
-
-    } catch (error) {
-        throw new Error(error.message || 'Something went wrong during login');
-    }
+  return await apiRequest({
+    url: "/auth/login",
+    method: "POST",
+    data: {
+      email: credentials.email,
+      password: credentials.password,
+    },
+  });
 };

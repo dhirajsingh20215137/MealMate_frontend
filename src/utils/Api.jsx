@@ -1,16 +1,18 @@
 import axios from "axios";
-import { HOST } from "../utils/Constant";
-
+import { HOST } from "./Constant";
+import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
   baseURL: HOST,
   headers: { "Content-Type": "application/json" },
-  withCredentials: true, 
+  withCredentials: true,
 });
 
 
-export const api = async ({ url, method = "GET", data = null, headers = {}, token }) => {
+export const apiRequest = async ({ url, method , data = null, headers = {} }) => {
   try {
+    const token = Cookies.get("authToken");
+
     const response = await axiosInstance({
       url,
       method,
@@ -23,6 +25,6 @@ export const api = async ({ url, method = "GET", data = null, headers = {}, toke
 
     return response.data;
   } catch (error) {
-    throw error; 
+    throw error;
   }
 };

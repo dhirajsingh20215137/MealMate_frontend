@@ -19,7 +19,7 @@ class SignupContainer extends Component {
         height: "",
         targetedCarbs: "",
         targetedProtein: "",
-        targetedCalories: "",
+        targetedFats: "",
       },
       snackbar: {
         message: "",
@@ -53,7 +53,7 @@ class SignupContainer extends Component {
       height,
       targetedCarbs,
       targetedProtein,
-      targetedCalories,
+      targetedFats,
     } = this.state.formData;
 
     if (!email || !password || !confirmPassword) {
@@ -77,7 +77,7 @@ class SignupContainer extends Component {
         height: parseFloat(height),
         targetedCarbs: parseFloat(targetedCarbs),
         targetedProtein: parseFloat(targetedProtein),
-        targetedCalories: parseFloat(targetedCalories),
+        targetedFats: parseFloat(targetedFats),
       });
 
       if (data && data.token) {

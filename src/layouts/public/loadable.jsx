@@ -1,7 +1,7 @@
 import loadable from "../../utils/loadable";
 
 const Public = loadable(() => import("./containers/Public"), {
-  fallback: null,
+  fallback: <div>Loading...</div>,
 });
 
 export default Public;

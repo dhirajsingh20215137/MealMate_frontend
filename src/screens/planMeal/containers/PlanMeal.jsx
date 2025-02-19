@@ -21,7 +21,6 @@ const PlanMealContainer = () => {
       const response = await fetchMealPlans(userId, token);
       setMealPlans(response || []);
     } catch (error) {
-      console.error("Error fetching meals:", error);
       setMealPlans([]);
     }
   };
@@ -32,7 +31,6 @@ const PlanMealContainer = () => {
       const response = await fetchUserFoods(userId, token);
       setUserFoods(response || []);
     } catch (error) {
-      console.error("Error fetching user foods:", error);
       setUserFoods([]);
     }
   };
@@ -44,10 +42,9 @@ const PlanMealContainer = () => {
     }
   }, [userId, token]);
 
-  // Add meal handler
+
   const handleAddMeal = async () => {
     if (!selectedFoodId || !quantity) {
-      console.error("Please select a food and enter quantity.");
       return;
     }
 
@@ -63,7 +60,6 @@ const PlanMealContainer = () => {
       setSelectedFoodId("");
       setQuantity("");
     } catch (error) {
-      console.error("Error adding meal:", error);
     }
   };
 
@@ -75,7 +71,6 @@ const PlanMealContainer = () => {
         prev.filter((meal) => meal.mealPlannerId !== mealPlannerId)
       );
     } catch (error) {
-      console.error("Error removing meal:", error);
     }
   };
 

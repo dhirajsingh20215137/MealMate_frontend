@@ -1,7 +1,7 @@
-import loadable from "../../utils/loadable"
+import loadable from "../../utils/loadable";
 
 const Private = loadable(() => import("./containers/Private"), {
-  fallback: null,
+  fallback: <div>Loading...</div>,
 });
 
 export default Private;
